@@ -1,0 +1,134 @@
+{
+    "Welcome": {
+        "eng": "Benvenue",
+        "rus": "Добро пожаловать"
+    },
+    "main": {
+        "eng": "Choose action",
+        "rus": "Выберите действие"
+    },
+    "progress": {
+        "eng": "Current progress",
+        "rus": "Текущий прогресс"
+    },
+    "quiz": {
+        "eng": "Quiz",
+        "rus": "Викторина"
+    },
+    "quiz_new": {
+        "eng": "New",
+        "rus": "Новые"
+    },
+    "name": {
+        "eng": "Name",
+        "rus": "ФИО"
+    },
+    "job": {
+        "eng": "Job",
+        "rus": "Позиция"
+    },
+    "photo": {
+        "eng": "Photo",
+        "rus": "Фото"
+    },
+    "gender": {
+        "eng": "Gender",
+        "rus": "Пол"
+    },
+    "settings": {
+        "eng": "Settings",
+        "rus": "Настройки"
+    },
+    "reset": {
+        "eng": "Reset progress",
+        "rus": "Сбросить прогресс"
+    },
+    "delete": {
+        "eng": "Delete account",
+        "rus": "Удалить аккаунт"
+    },
+    "back": {
+        "eng": "Back",
+        "rus": "Назад"
+    },
+    "yes": {
+        "eng": "Yes",
+        "rus": "Да"
+    },
+    "no": {
+        "eng": "No",
+        "rus": "Нет"
+    },
+    "male": {
+        "eng": "Male",
+        "rus": "Мужчина"
+    },
+    "female": {
+        "eng": "Female",
+        "rus": "Женшина"
+    },
+    "set_name": {
+        "eng": "Enter name",
+        "rus": "Укажать имя"
+    },
+    "set_job": {
+        "eng": "Enter job",
+        "rus": "Укажать работу"
+    },
+    "set_gender": {
+        "eng": "Choose gender",
+        "rus": "Укажать пол"
+    },
+    "set_photo": {
+        "eng": "Choose method",
+        "rus": "Выберите метод"
+    },
+    "upload_photo": {
+        "eng": "Upload photo",
+        "rus": "Загрузите фото"
+    },
+    "choose_photo": {
+        "eng": "From profile",
+        "rus": "Из аватарок"
+    },
+    "choose": {
+        "eng": "Choose",
+        "rus": "Выбрать"
+    },
+    "choose_action": {
+        "eng": "Choose action",
+        "rus": "Выберите действие"
+    },
+    "choose_quiz_type": {
+        "eng": "Choose quiz type",
+        "rus": "Выберите тип викторины"
+    },
+    "change_success": {
+        "eng": "Successfully changed",
+        "rus": "Успешно отредактировано"
+    },
+    "activated": {
+        "eng": "Your account is now active",
+        "rus": "Ваш аккунт успешно активирован"
+    },
+    "deleted": {
+        "eng": "Your account is deleted",
+        "rus": "Ваш аккунт успешно удалён"
+    },
+    "reseted": {
+        "eng": "Progress has been reset",
+        "rus": "Прогресс успешно сброшен"
+    },
+    "confirm": {
+        "eng": "Are you sure?",
+        "rus": "Вы уверены?"
+    },
+    "quiz_completed": {
+        "eng": "Quiz completed",
+        "rus": "Викторина завершена"
+    },
+    "no_photo_detected": {
+        "eng": "No photo sent",
+        "rus": "Неверный тип данных"
+    }
+}

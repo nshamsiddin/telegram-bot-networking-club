@@ -1,0 +1,20 @@
+module.exports = {
+    web: {
+        port: 3012
+    },
+    lang: 'eng',
+    bot: {
+        token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s'
+    },
+    ad: {
+        url: 'ldap://172.30.82.160',
+        dn: 'dc=bee,dc=unitel,dc=local',
+        username: 'SANabiev@UNITEL_MAIN',
+        password: 'Beeline6543'
+    },
+    mongodb: {
+        url: 'mongodb://localhost:27017/instalator',
+        username: null,
+        password: null
+    }
+}
