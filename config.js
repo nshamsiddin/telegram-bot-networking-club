@@ -13,7 +13,7 @@ module.exports = {
         password: 'Beeline6543'
     },
     mongodb: {
-        url: 'mongodb://localhost:27017/instalator',
+        url: 'mongodb://localhost:27017/bot',
         username: null,
         password: null
     }

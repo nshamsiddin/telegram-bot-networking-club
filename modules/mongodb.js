@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 const config = require('../config')
 
 mongoose.Promise = global.Promise
-mongoose.connect(config.mongodb.url)
+mongoose.connect(config.mongodb.url, {
+    useNewUrlParser: true
+})
 
 const db = mongoose.connection
 
