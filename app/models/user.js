@@ -25,7 +25,7 @@ const UserSchema = new db.mongoose.Schema({
         ref: 'Question',
         default: null
     },
-    ignore_list: [{
+    white_list: [{
         type: Number
     }],
     ignore_list: [{
