@@ -28,6 +28,9 @@ const UserSchema = new db.mongoose.Schema({
     ignore_list: [{
         type: Number
     }],
+    ignore_list: [{
+        type: Number
+    }],
     photo: {
         type: String,
     },
