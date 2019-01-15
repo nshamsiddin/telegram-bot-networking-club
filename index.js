@@ -1,4 +1,4 @@
-locale = require('./modules/locale')
+locale = require('./modules/locale/locale')
 
 const bot = require('./modules/telegram')
 const commandEvents = require('./app/commandEvents')
