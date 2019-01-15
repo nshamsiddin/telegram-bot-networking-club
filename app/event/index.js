@@ -54,6 +54,7 @@ event.on('location:back', (user, msg) => {
 
 // Go to Main page
 event.on('location:home', (user, msg) => {
+
     state[msg.from.id] = []
     event.emit('location:back', user, msg)
 })

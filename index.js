@@ -12,6 +12,7 @@ logger = require('./modules/logger')
 
 // Processing of messages
 bot.on('message', async msg => {
+    // console.log(msg.photo[msg.photo.length - 1].file_id)
     try {
         // Find user
         const findUser = await user.contains(msg.from.id)
@@ -81,7 +82,8 @@ const router = (user, msg) => {
         }
 
         // console trace
-        setTimeout(() => console.log(state[msg.from.id]), 1000)
+        console.log(state[msg.from.id])
+        // setTimeout(() => console.log(state[msg.from.id]), 1000)
     }
 }
 

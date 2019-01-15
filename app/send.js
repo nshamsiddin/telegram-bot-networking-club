@@ -12,7 +12,10 @@ exports.photo = (chat_id, file_id, caption) =>
         caption: caption
     })
 
-//Send question
+exports.error = async (id, err) =>
+    bot.sendMessage(id, err, { parse_mode: 'markdown' })
+
+// Send question
 exports.question = (chat_id, options, file_id) => {
     let opt = []
     options.map(p => opt.push([{ text: emoji.encode(p.text) }]))

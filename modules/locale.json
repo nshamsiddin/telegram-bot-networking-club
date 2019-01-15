@@ -59,6 +59,18 @@
         "eng": "No",
         "rus": "Нет"
     },
+    "know": {
+        "eng": "I know him",
+        "rus": "Знаю"
+    },
+    "remember": {
+        "eng": "Remember",
+        "rus": "Запомнить"
+    },
+    "no_quiz": {
+        "eng": "*No quizzes here for you*",
+        "rus": "Для вас нет вопросов в этом разделе"
+    },
     "male": {
         "eng": "Male",
         "rus": "Мужчина"

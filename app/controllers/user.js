@@ -6,6 +6,7 @@ exports.get = async id => Model.User.findOne({ id: id })
 // User Existence Check
 exports.contains = async id => Model.User.findOne({ id: id })
 
+
 // Adding a new user
 exports.create = async data => {
     await new Model.User({
@@ -16,25 +17,6 @@ exports.create = async data => {
 
 
 exports.activate_user = async id => await Model.User.updateOne({ id: id })
-
-// exports.create_new = async (id, username) => {
-//     ad.findUser(username, (err, user) => {
-//         if (err) {
-//             log('ERROR: ' + JSON.stringify(err))
-//             return
-//         }
-//         if (!user) {
-//             log('User: ' + sAMAccountName + ' not found.')
-//         }
-//         else {
-//             await new Model.User({
-//                 id: id,
-//                 name: `${user.givenName} ${user.sn}`,
-//                 department: user
-//             }).save()
-//         }
-//     })
-// }
 
 // Add quiz to user
 exports.addQuiz = async (user, quiz_id) => {
@@ -54,10 +36,40 @@ exports.setJob = async (id, job) => {
     await Model.User.updateOne({ id: id }, { job: job })
 }
 
-exports.generateUsersList = async (id) => await Model.User.find(
-    { id: { $ne: id }, visible: true, active: true },
-    { '_id': 0, '__v': 0 }
-)
+exports.generateList = async (user, type) => {
+    let result = []
+    await Model.User.find({
+        id: { $ne: user.id },
+        visible: true, active: true
+    }, { '_id': 0, '__v': 0 },
+        (err, users) => {
+            result = users.filter((u) => {
+                return (type === 'new'
+                    ? !user.white_list.includes(u.id)
+                    : user.white_list.includes(u.id))
+                    && !user.ignore_list.includes(u.id)
+            })
+        }
+
+    )
+    console.log(result.length)
+    return result
+}
+
+exports.getNew = async (user) => {
+    let result = []
+    await Model.User.find({
+        id: { $ne: user.id },
+        visible: true, active: true
+    }, { '_id': 0, '__v': 0 }, (err, users) => {
+        result = users.filter((u) => {
+            return !user.white_list.includes(u.id)
+                && !user.ignore_list.includes(u.id)
+        })
+    })
+    return result;
+}
+
 
 exports.save = async user => await user.save()
 
