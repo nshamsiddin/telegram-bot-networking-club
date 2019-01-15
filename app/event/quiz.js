@@ -12,7 +12,6 @@ module.exports = (event, state, map, send) => {
 
     event.on('quiz:new', async (user, msg, action, next) => {
         let quiz = await actions.generateQuiz('new', user)
-        console.log(quiz)
         if (quiz) {
             event.emit('quiz:send:question_new', action, user, msg)
             next && next()

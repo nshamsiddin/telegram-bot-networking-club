@@ -21,20 +21,23 @@ exports.generateQuiz = async (type, user) => {
     let result = null
     const correct_answers = []
     let usersList = null
-    console.log('1')
     usersList = await User.generateList(user, type)
-    console.log('2')
+    console.log(usersList.length)
     if (usersList.length < 1) {
-        console.log('3')
-        console.log(usersList.length)
+        return null;
     }
     else {
         switch (type) {
             case 'new':
-                for (let i = 0; i < REVIEW_QUIZ_SIZE; i++) {
+                for (let i = 0; i < usersList.length && i < REVIEW_QUIZ_SIZE; i++) {
+                    console.log('tset')
                     let question = await Question.add(quiz._id)
                     question.type = type
-                    let option = getOption(true, usersList)
+                    let option = {
+                        text: null,
+                        id: usersList[i].id,
+                        correct: true
+                    }
                     question.correct_answer = option
                     correct_answers.push(option)
                     await Question.save(question)
@@ -70,8 +73,6 @@ exports.generateQuiz = async (type, user) => {
                         }
                     }
 
-
-
                     shuffle(options)
                     question.options = options
                     question.user = user._id
@@ -81,17 +82,14 @@ exports.generateQuiz = async (type, user) => {
                     quiz.questions.push(question._id)
                 }
                 break
-                
-            }
-            await Quiz.save(quiz)
-            // Add quiz to user
 
-            await User.addQuiz(user, quiz._id)
-            result = quiz
-            console.log(result)
+        }
+        await Quiz.save(quiz)
+
+        // Add quiz to user
+        await User.addQuiz(user, quiz._id)
+        return quiz
     }
-    console.log(result)
-    return result
     function getOption(correct) {
         const u = usersList[random(0, usersList.length - 1)]
         return option = {
@@ -130,7 +128,5 @@ exports.addToList = async (user, answer) => {
                 && console.log('added to white list' + question.correct_answer.id)
             break
     }
-    // console.log(123123)
     await User.save(user)
-    // console.log('test')
 }

@@ -52,7 +52,6 @@ exports.generateList = async (user, type) => {
         }
 
     )
-    console.log(result.length)
     return result
 }
 
