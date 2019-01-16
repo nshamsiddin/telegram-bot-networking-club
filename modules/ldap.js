@@ -3,7 +3,7 @@ let ActiveDirectory = require('activedirectory')
 let ad = new ActiveDirectory(config.ad)
 
 exports.authenticate = async (username, password) => {
-    ad.authenticate(username, password, (err, auth) => {
+    ad.authenticate(username + '@UNITEL_MAIN', password, (err, auth) => {
         if (err) {
             console.log(err)
             return null
