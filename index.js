@@ -8,13 +8,6 @@ const map = require('./app/map')
 const emoji = require('./app/emoji')
 const ldap = require('./modules/ldap')
 
-
-ldap.authenticate('SANabiev@UNITEL_MAIN', 'Beeline6543')
-
-ldap.findUser('asbAbramov')
-// logger = require('./modules/logger')
-
-
 // Processing of messages
 bot.on('message', async msg => {
     // console.log(msg.photo[msg.photo.length - 1].file_id)
