@@ -8,7 +8,7 @@ module.exports = {
     },
     ad: {
         url: 'ldap://172.30.82.160',
-        dn: 'dc=bee,dc=unitel,dc=local',
+        baseDN: 'dc=bee,dc=unitel,dc=local',
         username: 'SANabiev@UNITEL_MAIN',
         password: 'Beeline6543'
     },
