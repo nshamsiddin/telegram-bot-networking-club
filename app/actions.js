@@ -15,6 +15,13 @@ function random(min, max) {
     return rand
 }
 
+const required_params = [
+    { name: 'username', text: 'Username' },
+    { name: 'name', text: 'Name' },
+    { name: 'job', text: 'Job' },
+    { name: 'gender', text: 'Gender' },
+    { name: 'photo', text: 'Photo' }]
+
 
 exports.generateQuiz = async (type, user) => {
     let quiz = await Quiz.add(user._id)

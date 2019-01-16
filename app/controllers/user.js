@@ -20,7 +20,7 @@ exports.reset = async user => {
 }
 
 
-exports.activate_user = async id => await Model.User.updateOne({ id: id })
+exports.activate_user = async id => await Model.User.updateOne({ id: id }, { active: true })
 
 // Add quiz to user
 exports.addQuiz = async (user, quiz_id) => {

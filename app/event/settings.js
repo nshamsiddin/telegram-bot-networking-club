@@ -1,11 +1,5 @@
 const User = require('../controllers/user')
 const actions = require('../actions')
-const required_params = [
-    { name: 'username', text: 'Username' },
-    { name: 'name', text: 'Name' },
-    { name: 'job', text: 'Job' },
-    { name: 'photo', text: 'Photo' },
-    { name: 'gender', text: 'Gender' }]
 
 module.exports = (event, state, map, send) => {
 
@@ -45,7 +39,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set:name:await', async (user, msg, action, next) => {
-        actions.setParam(user, msg, action, next, 'name')
+        actions.setParam(user, msg, 'name')
         event.emit('location:back', user, msg)
     })
 
@@ -72,7 +66,7 @@ module.exports = (event, state, map, send) => {
     event.on('settings:set:photo:await', async (user, msg, action, next) => {
         if (msg.photo) {
             msg.text = msg.photo[msg.photo.length - 1].file_id
-            actions.setParam(user, msg, action, next, 'photo')
+            actions.setParam(user, msg, 'photo')
             event.emit('location:back', user, msg)
         }
         else {
@@ -85,6 +79,7 @@ module.exports = (event, state, map, send) => {
         await send.profile_photos(user.id)
         next && next()
     })
+    
     event.on('settings:set:photo:profile:await', async (user, msg, action, next) => {
         await send.profile_photos(user.id, msg.text)
         // await setParam(user, msg, action, next, 'photo')
@@ -96,7 +91,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set:gender:await', async (user, msg, action, next) => {
-        setParam(user, msg, action, next, 'gender')
+        actions.setParam(user, msg, 'gender')
         event.emit('location:back', user, msg)
     })
 

@@ -14,6 +14,7 @@ bot.on('message', async msg => {
     try {
         // Find user
         const findUser = await user.contains(msg.from.id)
+        // console.log(findUser)
         if (!findUser)
             throw new Error('Not user')
         // Send buttons & routee
@@ -24,6 +25,7 @@ bot.on('message', async msg => {
         //     id: msg.from.id,
         //     name: msg.from.first_name
         // })
+
         botCommands(msg)
     }
 })
@@ -88,6 +90,7 @@ const botCommands = msg => {
     // Clear the user path when executing commands
     state[msg.from.id] = []
     // Run the bot command
+    console.log('inside bot commands')
     switch (msg.text) {
         case '/start':
             return commandEvents.emit('/start', msg)

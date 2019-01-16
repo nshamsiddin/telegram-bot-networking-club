@@ -61,13 +61,6 @@ module.exports = {
                                 [locale('back')]: { event: 'location:back' }
                             }
                         },
-                        [locale('username')]: {
-                            event: 'settings:set:username',
-                            children: {
-                                '*': { event: 'settings:set:username:await', await: true },
-                                [locale('back')]: { event: 'location:back' }
-                            }
-                        },
                         [locale('department')]: {
                             event: 'settings:set:department',
                             children: {
