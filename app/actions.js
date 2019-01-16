@@ -130,3 +130,24 @@ exports.addToList = async (user, answer) => {
     }
     await User.save(user)
 }
+
+exports.setParam = async (user, msg, param) => {
+    let message = locale('change_success')
+    param === 'gender' ? user[param] = cast_gender() : user[param] = msg.text
+    if (!user.active) {
+        let active = true
+        required_params.map(p => !user[p.name] ? active = false : active)
+        user.active = active
+        active ? message += `\n${locale('activated')}` : active
+    }
+    User.save(user)
+    send.message(msg.from.id, message)
+
+
+    function cast_gender() {
+        if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(msg.text) !== -1)
+            return 'male'
+        if (['female', 'Female', 'женшина', 'Женшина'].indexOf(msg.text) !== -1)
+            return 'female'
+    }
+}

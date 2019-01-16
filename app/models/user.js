@@ -37,6 +37,9 @@ const UserSchema = new db.mongoose.Schema({
     job: {
         type: String
     },
+    department: {
+        type: String
+    },
     gender: {
         type: String
     },

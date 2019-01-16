@@ -6,8 +6,13 @@ const { event, state } = require('./app/event')
 const user = require('./app/controllers/user')
 const map = require('./app/map')
 const emoji = require('./app/emoji')
+const ldap = require('./modules/ldap')
 
-logger = require('./modules/logger')
+
+ldap.authenticate('SANabiev@UNITEL_MAIN', 'Beeline6543')
+
+ldap.findUser('asbAbramov')
+// logger = require('./modules/logger')
 
 
 // Processing of messages
@@ -22,12 +27,11 @@ bot.on('message', async msg => {
         return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg)
     } catch (e) {
         // Create new user
-        await user.create({
-            id: msg.from.id,
-            name: msg.from.first_name
-        })
+        // await user.create({
+        //     id: msg.from.id,
+        //     name: msg.from.first_name
+        // })
         botCommands(msg)
-        // return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(null, msg, register_map)
     }
 })
 
@@ -90,10 +94,11 @@ const router = (user, msg) => {
 const botCommands = msg => {
     // Clear the user path when executing commands
     state[msg.from.id] = []
-
     // Run the bot command
     switch (msg.text) {
         case '/start':
             return commandEvents.emit('/start', msg)
+        default:
+            return event.emit('register', msg)
     }
 }

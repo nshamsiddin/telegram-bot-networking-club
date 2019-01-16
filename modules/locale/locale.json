@@ -1,7 +1,15 @@
 {
-    "Welcome": {
-        "eng": "Benvenue",
-        "rus": "Добро пожаловать"
+    "welcome": {
+        "eng": "Benvenuto, send your username and password separated by space",
+        "rus": "Добро пожаловать, отправьте имя пользователя и пароль ..."
+    },
+    "user_created": {
+        "eng": "User has been created",
+        "rus": "Пользователь создан"
+    },
+    "wrong_credentials": {
+        "eng": "Wrong credentials, make sure you are entering in the format 'Username password'",
+        "rus": "Неправильное им пользователя или пароль, 'Username password'"
     },
     "main": {
         "eng": "Choose action",
@@ -19,9 +27,21 @@
         "eng": "New",
         "rus": "Новые"
     },
+    "edit_info": {
+        "eng": "Edit info",
+        "rus": "Редактировать информацию"
+    },
+    "department": {
+        "eng": "Department",
+        "rus": "Дирекция"
+    },
     "name": {
         "eng": "Name",
         "rus": "ФИО"
+    },
+    "username": {
+        "eng": "Username",
+        "rus": "Пользователь"
     },
     "job": {
         "eng": "Job",
@@ -82,6 +102,10 @@
     "set_name": {
         "eng": "Enter name",
         "rus": "Укажать имя"
+    },
+    "set_department": {
+        "eng": "Choose department",
+        "rus": "Выберите дирекцию"
     },
     "set_job": {
         "eng": "Enter job",

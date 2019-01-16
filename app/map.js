@@ -11,19 +11,19 @@ module.exports = {
                         [locale('know')]: { event: 'quiz:new:await:yes' },
                         [locale('remember')]: { event: 'quiz:new:await:no' }
                     }
-                // },
-                // [locale('quiz_new')]: {
-                //     event: 'quiz:new',
-                //     children: {
-                //         [locale('know')]: { event: 'quiz:new:await:yes' },
-                //         [locale('remember')]: { event: 'quiz:new:await:no' }
-                //         // '*': {
-                //         //     event: 'quiz:new:await',
-                //         //     children: {
-                //         //     }
-                //         // },
-                //         // [locale('back')]: { event: 'location:back' }
-                //     }
+                    // },
+                    // [locale('quiz_new')]: {
+                    //     event: 'quiz:new',
+                    //     children: {
+                    //         [locale('know')]: { event: 'quiz:new:await:yes' },
+                    //         [locale('remember')]: { event: 'quiz:new:await:no' }
+                    //         // '*': {
+                    //         //     event: 'quiz:new:await',
+                    //         //     children: {
+                    //         //     }
+                    //         // },
+                    //         // [locale('back')]: { event: 'location:back' }
+                    //     }
                 },
                 [locale('name')]: {
                     event: 'quiz:name',
@@ -51,49 +51,70 @@ module.exports = {
         [locale('settings')]: {
             event: 'settings',
             children: {
-                [locale('name')]: {
-                    event: 'settings:set:name',
+                [locale('edit_info')]: {
+                    event: 'settings:set',
                     children: {
-                        '*': { event: 'settings:set:name:await', await: true },
-                        [locale('back')]: { event: 'location:back' }
-                    }
-                },
-                [locale('job')]: {
-                    event: 'settings:set:job',
-                    children: {
-                        '*': { event: 'settings:set:job:await', await: true },
-                        [locale('back')]: { event: 'location:back' }
-                    }
-                },
-                [locale('photo')]: {
-                    event: 'settings:set:photo',
-                    children: {
-                        [locale('upload_photo')]: {
-                            event: 'settings:set:photo:upload',
+                        [locale('name')]: {
+                            event: 'settings:set:name',
                             children: {
-                                '*': { event: 'settings:set:photo:await', await: true },
+                                '*': { event: 'settings:set:name:await', await: true },
                                 [locale('back')]: { event: 'location:back' }
                             }
                         },
-                        [locale('choose_photo')]: {
-                            event: 'settings:set:photo:profile',
+                        [locale('username')]: {
+                            event: 'settings:set:username',
                             children: {
-                                '*': { event: 'settings:set:photo:profile:await', await: true },
-                                [locale('choose')]: { event: 'location:back' }
+                                '*': { event: 'settings:set:username:await', await: true },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
+                        [locale('department')]: {
+                            event: 'settings:set:department',
+                            children: {
+                                '*': { event: 'settings:set:department:await', await: true },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
+                        [locale('job')]: {
+                            event: 'settings:set:job',
+                            children: {
+                                '*': { event: 'settings:set:job:await', await: true },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
+                        [locale('photo')]: {
+                            event: 'settings:set:photo',
+                            children: {
+                                [locale('upload_photo')]: {
+                                    event: 'settings:set:photo:upload',
+                                    children: {
+                                        '*': { event: 'settings:set:photo:await', await: true },
+                                        [locale('back')]: { event: 'location:back' }
+                                    }
+                                },
+                                [locale('choose_photo')]: {
+                                    event: 'settings:set:photo:profile',
+                                    children: {
+                                        '*': { event: 'settings:set:photo:profile:await', await: true },
+                                        [locale('choose')]: { event: 'location:back' }
+                                    }
+                                },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
+                        [locale('gender')]: {
+                            event: 'settings:set:gender',
+                            children: {
+                                '*': { event: 'settings:set:gender:await', await: true },
+                                [locale('male')]: { event: 'settings:set:gender:await', },
+                                [locale('female')]: { event: 'settings:set:gender:await', },
+                                [locale('back')]: { event: 'location:back' }
                             }
                         },
                         [locale('back')]: { event: 'location:back' }
                     }
                 },
-                [locale('gender')]: {
-                    event: 'settings:set:gender',
-                    children: {
-                        '*': { event: 'settings:set:gender:await', await: true },
-                        [locale('male')]: { event: 'settings:set:gender:await', },
-                        [locale('female')]: { event: 'settings:set:gender:await', },
-                        [locale('back')]: { event: 'location:back' }
-                    }
-                },
+
                 [locale('reset')]: {
                     event: 'settings:reset',
                     children: {

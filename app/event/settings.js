@@ -1,50 +1,63 @@
 const User = require('../controllers/user')
+const actions = require('../actions')
 const required_params = [
+    { name: 'username', text: 'Username' },
     { name: 'name', text: 'Name' },
     { name: 'job', text: 'Job' },
     { name: 'photo', text: 'Photo' },
     { name: 'gender', text: 'Gender' }]
 
 module.exports = (event, state, map, send) => {
+
     event.on('settings', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('choose_action'), action)
+        send.keyboard(msg.from.id, locale('choose_action'), action, 3)
         next && next()
     })
 
-    event.on('settings:set:name', async (user, msg, action, next) => {
+    event.on('settings:set', async (user, msg, action, next) => {
+        send.keyboard(msg.from.id, locale('choose_action'), action, 5)
+        next && next()
+    })
+
+    event.on('settings:set:username', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('set_name'), action)
         next && next()
     })
 
-    async function setParam(user, msg, action, next, param) {
-        let message = locale('change_success')
-        param === 'gender' ? user[param] = cast_gender() : user[param] = msg.text
-        if (!user.active) {
-            let active = true
-            required_params.map(p => !user[p.name] ? active = false : active)
-            user.active = active
-            active ? message += `\n${locale('activated')}` : active
-        }
-        User.save(user)
-        send.message(msg.from.id, message)
+    event.on('settings:set:username:await', async (user, msg, action, next) => {
+        actions.setParam(user, msg, 'username')
         event.emit('location:back', user, msg)
+    })
 
-        function cast_gender() {
-            if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(msg.text) !== -1)
-                return 'male'
-            if (['female', 'Female', 'женшина', 'Женшина'].indexOf(msg.text) !== -1)
-                return 'female'
-        }
-    }
+    event.on('settings:set:department', async (user, msg, action, next) => {
+        send.keyboard(msg.from.id, locale('set_department'), action)
+        next && next()
+    })
 
-    event.on('settings:set:name:await', async (user, msg, action, next) => await setParam(user, msg, action, next, 'name'))
+    event.on('settings:set:department:await', async (user, msg, action, next) => {
+        actions.setParam(user, msg, 'department')
+        event.emit('location:back', user, msg)
+    })
+
+    event.on('settings:set:name', async (user, msg, action, next) => {
+        send.keyboard(msg.from.id, locale('set_username'), action)
+        next && next()
+    })
+
+    event.on('settings:set:name:await', async (user, msg, action, next) => {
+        actions.setParam(user, msg, action, next, 'name')
+        event.emit('location:back', user, msg)
+    })
 
     event.on('settings:set:job', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('set_job'), action)
         next && next()
     })
 
-    event.on('settings:set:job:await', async (user, msg, action, next) => await setParam(user, msg, action, next, 'job'))
+    event.on('settings:set:job:await', async (user, msg, action, next) => {
+        await actions.setParam(user, msg, 'job')
+        event.emit('location:back', user, msg)
+    })
 
     event.on('settings:set:photo', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('set_photo'), action)
@@ -59,14 +72,14 @@ module.exports = (event, state, map, send) => {
     event.on('settings:set:photo:await', async (user, msg, action, next) => {
         if (msg.photo) {
             msg.text = msg.photo[msg.photo.length - 1].file_id
-            await setParam(user, msg, action, next, 'photo')
+            actions.setParam(user, msg, action, next, 'photo')
+            event.emit('location:back', user, msg)
         }
         else {
             send.message(msg.from.id, locale('no_photo_detected'))
             event.emit('location:back', user, msg)
         }
     })
-
 
     event.on('settings:set:photo:profile', async (user, msg, action, next) => {
         await send.profile_photos(user.id)
@@ -82,7 +95,10 @@ module.exports = (event, state, map, send) => {
         next && next()
     })
 
-    event.on('settings:set:gender:await', async (user, msg, action, next) => await setParam(user, msg, action, next, 'gender'))
+    event.on('settings:set:gender:await', async (user, msg, action, next) => {
+        setParam(user, msg, action, next, 'gender')
+        event.emit('location:back', user, msg)
+    })
 
     event.on('settings:reset', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('confirm'), action)
@@ -90,6 +106,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:reset:yes', async (user, msg, action, next) => {
+        await User.reset(user)
         send.message(msg.from.id, locale('reseted'))
         event.emit('location:back', user, msg)
     })
@@ -98,8 +115,9 @@ module.exports = (event, state, map, send) => {
         send.keyboard(msg.from.id, locale('confirm'), action)
         next && next()
     })
-
+    
     event.on('settings:delete:yes', async (user, msg, action, next) => {
+        await User.delete(user)
         send.messageHiddenKeyboard(msg.from.id, locale('deleted'))
     })
 
