@@ -8,11 +8,19 @@ exports.contains = async id => Model.User.findOne({ id: id })
 
 
 // Adding a new user
-exports.create = async data => {
+exports.create = async user => {
     await new Model.User({
-        id: data.id,
-        name: data.name
+        id: user.id,
+        name: user.name,
+        department: user.department,
     }).save()
+}
+
+exports.reset = async user => {
+    Model.User.updateOne({ id: user.id }, {
+        white_list: [],
+        ignore_list: []
+    })
 }
 
 
@@ -31,6 +39,7 @@ exports.setParam = async (id, user) => await Model.User.updateOne({ id: id }, us
 exports.setName = async (id, name) => {
     await Model.User.updateOne({ id: id }, { name: name })
 }
+exports.delete = async (user) => Model.User.deleteOne({ id: user.id })
 
 exports.setJob = async (id, job) => {
     await Model.User.updateOne({ id: id }, { job: job })

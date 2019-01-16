@@ -11,6 +11,7 @@ const state = {}
 const settings = require('./settings')(event, state, map, send)
 const quiz = require('./quiz')(event, state, map, send)
 const action = require('./action')(event, state, map, send)
+const register = require('./register')(event, state, map, send)
 
 // Change the location of the user
 event.on('location:next', (user, msg, action, value) => {

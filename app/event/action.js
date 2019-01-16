@@ -5,4 +5,5 @@ module.exports = (event, state, map, send) => {
         let caption = `${user.name}\n${user.job}\n${user.gender}\n`
         await send.photo(user.id, user.photo, caption)
     })
+    
 }
