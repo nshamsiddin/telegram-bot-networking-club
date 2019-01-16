@@ -3,6 +3,8 @@ let ActiveDirectory = require('activedirectory')
 let ad = new ActiveDirectory(config.ad)
 
 exports.authenticate = async (username, password) => {
+    console.log('trying to auth')
+    console.log(username, password)
     ad.authenticate(username + '@UNITEL_MAIN', password, (err, auth) => {
         if (err) {
             console.log(err)
@@ -15,12 +17,16 @@ exports.authenticate = async (username, password) => {
 
 
 exports.findUser = async (username) => {
+    console.log('trying to get info')
+    console.log(username)
+
     await ad.findUser(username, (err, user) => {
         if (err) {
             console.log(err)
             return null
         }
         if (user) {
+            
             console.log(user)
             return {
                 name: user.dispayName,
