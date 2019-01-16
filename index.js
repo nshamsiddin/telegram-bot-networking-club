@@ -8,20 +8,6 @@ const map = require('./app/map')
 const emoji = require('./app/emoji')
 const ldap = require('./modules/ldap')
 
-event.emit('register', {
-    message_id: 14243,
-    from:
-    {
-        id: 58235445,
-        is_bot: false,
-        first_name: 'Shamsiddin',
-        language_code: 'en'
-    },
-    chat: { id: 58235445, first_name: 'Shamsiddin', type: 'private' },
-    date: 1547622859,
-    text: 'SANabiev Beeline6543'
-})
-
 // Processing of messages
 bot.on('message', async msg => {
     // console.log(msg.photo[msg.photo.length - 1].file_id)
