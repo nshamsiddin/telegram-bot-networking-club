@@ -15,7 +15,6 @@ exports.authenticate = async (username, password) => {
     })
 }
 
-
 exports.findUser = async (username) => {
     console.log('trying to get info')
     console.log(username)
