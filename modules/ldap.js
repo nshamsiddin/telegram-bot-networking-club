@@ -8,6 +8,7 @@ exports.authenticate = async (username, password) => {
             console.log(err)
             return null
         }
+        console.log(auth)
         return auth
     })
 }
@@ -19,9 +20,12 @@ exports.findUser = async (username) => {
             console.log(err)
             return null
         }
-        if (user) return {
-            name: user.dispayName,
-            department: getDepartment(user.dn)
+        if (user) {
+            console.log(user)
+            return {
+                name: user.dispayName,
+                department: getDepartment(user.dn)
+            }
         }
         else return null
     })
