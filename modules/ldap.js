@@ -12,7 +12,6 @@ exports.authenticate = async (username, password) => {
     })
 }
 
-
 exports.findUser = async (username) => {
     await ad.findUser(username, (err, user) => {
         if (err) {
