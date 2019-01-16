@@ -12,6 +12,7 @@ exports.authenticate = async (username, password) => {
     })
 }
 
+
 exports.findUser = async (username) => {
     await ad.findUser(username, (err, user) => {
         if (err) {
@@ -25,30 +26,6 @@ exports.findUser = async (username) => {
         else return null
     })
 }
-// exports.authenticate = async (username, password) => {
-//     ad.authenticate(username, password, (err, auth) => {
-//         if (err) {
-//             console.log(err)
-//             return null
-//         }
-//         return auth
-//     })
-// }
-
-
-// exports.findUser = async (username) => {
-//     await ad.findUser(username, (err, user) => {
-//         if (err) {
-//             console.log(err)
-//             return null
-//         }
-//         if (user) return {
-//             name: user.dispayName,
-//             department: getDepartment(user.dn)
-//         }
-//         else return null
-//     })
-// }
 
 
 function getDepartment(dn) {
