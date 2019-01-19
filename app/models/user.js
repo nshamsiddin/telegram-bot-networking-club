@@ -11,6 +11,9 @@ const UserSchema = new db.mongoose.Schema({
     name: {
         type: String
     },
+    username: {
+        type: String
+    },
     quizzes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Quiz'
