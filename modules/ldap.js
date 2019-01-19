@@ -4,19 +4,28 @@ const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
 
 exports.createUser = (username, password, id) => {
-    ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
-        if (err) console.log(err)
-        if (auth) {
-            ad.findUser(username, (err, info) => {
-                let user = {
-                    id: id,
-                    name: info.displayName,
-                    department: getDepartment(info.dn),
-                }
-                User.create(user)
-            })
-        }
-    })
+
+    let user = {
+        id: id,
+        name: info.displayName,
+        username: username,
+        department: getDepartment(info.dn),
+    }
+    User.create(user)
+
+    // ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
+    //     if (err) console.log(err)
+    //     if (auth) {
+    //         ad.findUser(username, (err, info) => {
+    //             let user = {
+    //                 id: id,
+    //                 name: info.displayName,
+    //                 department: getDepartment(info.dn),
+    //             }
+    //             User.create(user)
+    //         })
+    //     }
+    // })
 }
 
 function getDepartment(dn) {
