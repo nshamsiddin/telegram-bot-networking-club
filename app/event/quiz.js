@@ -40,7 +40,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('quiz:name:await', async (user, msg, action, next) => {
-        actions.setAnswer(user.last_question, msg.text)
+        await actions.setAnswer(user.id, user.last_question, msg.text)
         event.emit('quiz:send:question', user, msg)
     })
 
@@ -54,7 +54,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('quiz:job:await', async (user, msg, action, next) => {
-        actions.setAnswer(user.last_question, msg.text)
+        await actions.setAnswer(user.id, user.last_question, msg.text)
         event.emit('quiz:send:question', user, msg)
     })
 

@@ -108,13 +108,41 @@ exports.generateQuiz = async (type, user) => {
 
 }
 
-exports.setAnswer = async (question_id, answer) => {
+exports.setAnswer = async (user_id, question_id, answer) => {
+
+    let text
+
     let question = await Question.get(question_id)
     question.given_answer = answer
-    question.correct_answer.text === answer ?
+
+    if (question.correct_answer.text === answer) {
         question.correct = true
-        : question.correct = false
-    Question.save(question)
+        text = randomizeMessage(locale('correct'))
+    }
+    else {
+        question.correct = false
+        text = randomizeMessage(locale('incorrect'))
+    }
+    await Question.save(question)
+
+    send.message(user_id, text)
+    await sleep(3000)
+}
+
+// Execution postponing
+function sleep(time) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve()
+        }, time)
+    })
+}
+
+function randomizeMessage(message) {
+    let v = message.split(';')
+    let result
+    v.length > 1 ? result = shuffle.pick(v) : result = v
+    return result
 }
 
 exports.addToList = async (user, answer) => {
@@ -151,10 +179,11 @@ exports.setParam = async (user, msg, param) => {
     send.message(msg.from.id, message)
 
 
-    function cast_gender() {
-        if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(msg.text) !== -1)
-            return 'male'
-        if (['female', 'Female', 'женшина', 'Женшина'].indexOf(msg.text) !== -1)
-            return 'female'
-    }
+}
+
+function cast_gender(text) {
+    if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(text) !== -1)
+        return 'male'
+    if (['female', 'Female', 'женшина', 'Женшина'].indexOf(text) !== -1)
+        return 'female'
 }

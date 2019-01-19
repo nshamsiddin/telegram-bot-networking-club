@@ -75,6 +75,14 @@
         "eng": "Yes",
         "rus": "Да"
     },
+    "correct": {
+        "eng": "That is correct; Well done",
+        "rus": "Правильно; Молодец; Так держать"
+    },
+    "incorrect": {
+        "eng": "Incorrect; No worries",
+        "rus": "Неверно; Не волнуйся, иди дальше"
+    },
     "no": {
         "eng": "No",
         "rus": "Нет"
