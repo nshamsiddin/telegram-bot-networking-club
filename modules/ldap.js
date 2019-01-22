@@ -6,8 +6,11 @@ const User = require('../app/controllers/user')
 exports.createUser = async (username, password, id) => {
     console.log(`${username}@${config.domain.name}/${password}`)
     let result
+    console.log(1)
     await ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
+        console.log(2)
         if (err) console.log(err)
+        result = auth
         if (auth) {
             ad.findUser(username, (err, info) => {
                 let user = {
@@ -17,10 +20,9 @@ exports.createUser = async (username, password, id) => {
                 }
                 User.create(user)
             })
-            result = true
-        } else
-            result = false
+        }
     })
+    console.log(3)
     console.log(result)
     return result
 }
