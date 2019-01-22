@@ -12,7 +12,7 @@ exports.contains = async id => Model.User.findOne({ id: id })
 
 // Adding a new user
 exports.create = async user => {
-    await new Model.User(user).save({}, { success: console.log('success'), error: console.log('error') })
+    await new Model.User(user).save(null, { success: () => console.log('success'), error: () => console.log('error') })
 }
 
 exports.reset = async user => {
