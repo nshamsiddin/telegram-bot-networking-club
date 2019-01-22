@@ -3,9 +3,10 @@ const ActiveDirectory = require('activedirectory')
 const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
 
-exports.createUser = (username, password, id) => {
+exports.createUser = async (username, password, id) => {
     console.log(`${username}@${config.domain.name}/${password}`)
-    ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
+    let result
+    await ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
         if (err) console.log(err)
         if (auth) {
             ad.findUser(username, (err, info) => {
@@ -16,8 +17,12 @@ exports.createUser = (username, password, id) => {
                 }
                 User.create(user)
             })
-        }
+            result = true
+        } else
+            result = false
     })
+    console.log(result)
+    return result
 }
 
 function getDepartment(dn) {
