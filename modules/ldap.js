@@ -2,15 +2,11 @@ const config = require('../config')
 const ActiveDirectory = require('activedirectory')
 const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
+const send = require('../app/send')
 
-exports.createUser = async (username, password, id) => {
-    console.log(`${username}@${config.domain.name}/${password}`)
-    let result
-    console.log(1)
-    await ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
-        console.log(2)
+exports.createUser = (username, password, id) => {
+    ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
         if (err) console.log(err)
-        result = auth
         if (auth) {
             ad.findUser(username, (err, info) => {
                 let user = {
@@ -19,12 +15,13 @@ exports.createUser = async (username, password, id) => {
                     department: getDepartment(info.dn),
                 }
                 User.create(user)
+                send.message(id, locale('user_created'))
             })
         }
+        else{
+            send.message(id, locale('wrong_credentials'))
+        }
     })
-    console.log(3)
-    console.log(result)
-    return result
 }
 
 function getDepartment(dn) {
