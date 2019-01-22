@@ -12,7 +12,9 @@ const UserSchema = new db.mongoose.Schema({
         type: String
     },
     username: {
-        type: String
+        type: String,
+        required: [true, 'usernameRequired'],
+        unique: true
     },
     quizzes: [{
         type: mongoose.Schema.Types.ObjectId,
