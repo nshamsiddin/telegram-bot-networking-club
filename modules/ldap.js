@@ -3,7 +3,7 @@ const ActiveDirectory = require('activedirectory')
 const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
 const send = require('../app/send')
-const { event } = require('./app/event')
+const { event } = require('../app/event')
 
 exports.createUser = (username, password, id) => {
     ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
