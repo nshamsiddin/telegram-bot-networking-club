@@ -1,4 +1,7 @@
 const Model = require('../models/user')
+const { event } = require('../event')
+
+
 // const ad = require('../activedirectory')
 // Get user
 exports.get = async id => Model.User.findOne({ id: id })
@@ -9,7 +12,13 @@ exports.contains = async id => Model.User.findOne({ id: id })
 
 // Adding a new user
 exports.create = async user => {
-    await new Model.User(user).save()
+    if (await new Model.User(user).save()) {
+        console.log('created')
+    }
+    else {
+        console.log('not created')
+    }
+
 }
 
 exports.reset = async user => {
