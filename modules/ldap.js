@@ -4,6 +4,7 @@ const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
 
 exports.createUser = (username, password, id) => {
+    console.log(`${username}@${config.domain.name}/${password}`)
     ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
         if (err) console.log(err)
         if (auth) {
