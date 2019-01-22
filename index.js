@@ -7,7 +7,7 @@ const user = require('./app/controllers/user')
 const map = require('./app/map')
 const emoji = require('./app/emoji')
 const ldap = require('./modules/ldap')
-``
+
 event.emit('register', {
     message_id: 15325,
     from:
