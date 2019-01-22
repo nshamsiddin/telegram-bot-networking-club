@@ -14,13 +14,10 @@ exports.createUser = (username, password, id) => {
                     id: id,
                     name: info.displayName,
                     department: getDepartment(info.dn),
+                    username: username
                 }
                 User.create(user)
-                send.message(id, locale('user_created'))
             })
-        }
-        else{
-            send.message(id, locale('wrong_credentials'))
         }
     })
 }
