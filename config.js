@@ -4,7 +4,8 @@ module.exports = {
     },
     lang: 'eng',
     bot: {
-        token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s'
+        token: '293317035:AAGbBVDWTJcfU4KN0Q3NtzEHcS-3w3MvQDg'
+        // token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s'
     },
     domain:{
         name: 'UNITEL_MAIN'

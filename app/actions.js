@@ -89,7 +89,6 @@ exports.generateQuiz = async (type, user) => {
                     quiz.questions.push(question._id)
                 }
                 break
-
         }
         await Quiz.save(quiz)
 
@@ -168,7 +167,7 @@ exports.addToList = async (user, answer) => {
 
 exports.setParam = async (user, msg, param) => {
     let message = locale('change_success')
-    param === 'gender' ? user[param] = cast_gender() : user[param] = msg.text
+    param === 'gender' ? user[param] = cast_gender(msg.text) : user[param] = msg.text
     if (!user.active) {
         let active = true
         required_params.map(p => !user[p.name] ? active = false : active)

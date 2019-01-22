@@ -23,6 +23,8 @@ module.exports = (event, state, map, send) => {
         event.emit('location:back', user, msg)
     })
 
+    
+
     event.on('settings:set:department', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('set_department'), action)
         next && next()
@@ -91,6 +93,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set:gender:await', async (user, msg, action, next) => {
+        console.log('seggin gender')
         actions.setParam(user, msg, 'gender')
         event.emit('location:back', user, msg)
     })
