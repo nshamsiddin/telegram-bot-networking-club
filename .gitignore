@@ -1,8 +1,8 @@
 .idea/
 node_modules/
+.vscode/
+db_dump/
 *.txt
 *.log
 package-lock.json
-.vscode/
-db_dump/
 config.*

@@ -12,5 +12,8 @@ module.exports = async (event, state, map, send) => {
         // }
     })
 
-    // event.on('')
+    event.on('credentials:wrong', (id ) => {
+        console.log('test')
+        send.message(id, locale('wrong_credentials'))
+    })
 }

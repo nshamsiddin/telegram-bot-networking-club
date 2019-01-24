@@ -11,19 +11,6 @@ module.exports = {
                         [locale('know')]: { event: 'quiz:new:await:yes' },
                         [locale('remember')]: { event: 'quiz:new:await:no' }
                     }
-                    // },
-                    // [locale('quiz_new')]: {
-                    //     event: 'quiz:new',
-                    //     children: {
-                    //         [locale('know')]: { event: 'quiz:new:await:yes' },
-                    //         [locale('remember')]: { event: 'quiz:new:await:no' }
-                    //         // '*': {
-                    //         //     event: 'quiz:new:await',
-                    //         //     children: {
-                    //         //     }
-                    //         // },
-                    //         // [locale('back')]: { event: 'location:back' }
-                    //     }
                 },
                 [locale('name')]: {
                     event: 'quiz:name',

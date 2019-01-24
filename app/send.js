@@ -1,5 +1,5 @@
 const bot = require('../modules/telegram')
-const emoji = require('./emoji')
+const emoji = require('../modules/decoder')
 const User = require('./controllers/user')
 
 // Send message

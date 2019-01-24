@@ -2,30 +2,15 @@ locale = require('./modules/locale/locale')
 
 const bot = require('./modules/telegram')
 const commandEvents = require('./app/commandEvents')
+const registerEvents = require('./app/registerEvents')
 const { event, state } = require('./app/event')
+const ldap = require('./modules/ldap')
 const user = require('./app/controllers/user')
 const map = require('./app/map')
-const emoji = require('./app/emoji')
-const ldap = require('./modules/ldap')
-
-event.emit('register', {
-    message_id: 15325,
-    from:
-    {
-        id: 58235445,
-        is_bot: false,
-        first_name: 'Shamsiddin',
-        language_code: 'en'
-    },
-    chat: { id: 58235445, first_name: 'Shamsiddin', type: 'private' },
-    date: 1548154670,
-    text: 'SANabiev Beeline6543'
-})
+const emoji = require('./modules/decoder')
 
 // Processing of messages
 bot.on('message', async msg => {
-    // console.log(msg)
-    // console.log(msg.photo[msg.photo.length - 1].file_id)
     try {
         // Find user
         const findUser = await user.contains(msg.from.id)
@@ -109,7 +94,7 @@ const botCommands = msg => {
     switch (msg.text) {
         case '/start':
             return commandEvents.emit('/start', msg)
-        default:
-            event.emit('register', msg)
+        case '/register':
+            return registerEvents.emit('register')
     }
 }

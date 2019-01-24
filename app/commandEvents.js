@@ -4,7 +4,7 @@ const send = require('./send')
 const map = require('./map')
 
 event.on('/start', msg => {
-    send.message(msg.from.id, `Send your username and password separated by space`)
+    send.message(msg.from.id, `/register`)
 })
 
 event.on('/home', msg => {
