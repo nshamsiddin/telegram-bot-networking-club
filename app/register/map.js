@@ -1,11 +1,18 @@
 module.exports = {
     event: 'register:home',
     children: {
-        'test' : {
+        'test': {
             event: 'register',
+            children: {
+                event: 'register:child',
+                'Back': 'location:back'
+            }
         },
-        'test2' : {
+        'test2': {
             event: 'register2',
+        },
+        'test3': {
+            event: 'register3',
         }
     }
 }

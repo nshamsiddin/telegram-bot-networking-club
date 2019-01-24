@@ -3,35 +3,59 @@ locale = require('./modules/locale/locale')
 const bot = require('./modules/telegram')
 const commandEvents = require('./app/commandEvents')
 const registerEvents = require('./app/registerEvents')
-const { event, state } = require('./app/event')
+const { event_reg, state_reg } = require('./app/event')
+const { event_alt, state_alt } = require('./app/register/event')
 const ldap = require('./modules/ldap')
 const user = require('./app/controllers/user')
-const map = require('./app/map')
+const regular_map = require('./app/map')
+const register_map = require('./app/register/map')
+
 const emoji = require('./modules/decoder')
 
 // Processing of messages
 bot.on('message', async msg => {
-    try {
-        // Find user
-        const findUser = await user.contains(msg.from.id)
-        // console.log(findUser)
-        if (!findUser)
-            throw new Error('Not user')
-        // Send buttons & routee
-        return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg)
-    } catch (e) {
-        // Create new user
-        // await user.create({
-        //     id: msg.from.id,
-        //     name: msg.from.first_name
-        // })
-
-        botCommands(msg)
+    let findUser = await user.contains(msg.from.id)
+    let map
+    let event, state
+    // console.log(findUser)
+    if (findUser) {
+        map = regular_map
+        event = event_reg
+        state = state_reg
     }
+    else {
+        findUser = null
+        map = register_map
+        event = event_alt
+        state = state_alt
+    }
+    return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg, map, event, state)
 })
 
+// // Processing of messages
+// bot.on('message', async msg => {
+//     try {
+//         // Find user
+//         const findUser = await user.contains(msg.from.id)
+//         // console.log(findUser)
+//         if (!findUser)
+//             throw new Error('Not user')
+//         // Send buttons & routee
+//         return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg)
+//     } catch (e) {
+//         // Create new user
+//         // await user.create({
+//         //     id: msg.from.id,
+//         //     name: msg.from.first_name
+//         // })
+
+//         botCommands(msg)
+//     }
+// })
+
 // Telegram router
-const router = (user, msg) => {
+const router = (user, msg, map, event, state) => {
+    console.log(msg.from.id)
     // Decode emoji
     if (msg.text) msg.text = emoji.decode(msg.text)
     // No user status, we give the main menu

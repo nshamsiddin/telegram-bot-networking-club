@@ -1,15 +1,16 @@
 const ee = require('events')
 const event = new ee.EventEmitter()
 const send = require('../send')
-const map = require('../map')
+const map = require('./map')
 
 // Locking User Location
 const state = {}
 
+
 // My components
-const settings = require('./settings')(event, state, map, send)
-const quiz = require('./quiz')(event, state, map, send)
-const action = require('./action')(event, state, map, send)
+// const settings = require('./settings')(event, state, map, send)
+// const quiz = require('./quiz')(event, state, map, send)
+// const action = require('./action')(event, state, map, send)
 // const register = require('./register')(event, state, map, send)
 
 // Change the location of the user
