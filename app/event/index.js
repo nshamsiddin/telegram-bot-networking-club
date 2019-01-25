@@ -2,7 +2,7 @@ const ee = require('events')
 const event = new ee.EventEmitter()
 const send = require('../send')
 const map = require('../map')
-
+const register_map = require('../map_register')
 // Locking User Location
 const state = {}
 
@@ -11,7 +11,7 @@ const state = {}
 const settings = require('./settings')(event, state, map, send)
 const quiz = require('./quiz')(event, state, map, send)
 const action = require('./action')(event, state, map, send)
-// const register = require('./register')(event, state, map, send)
+const register = require('./register')(event, state, register_map, send)
 
 // Change the location of the user
 event.on('location:next', (user, msg, action, value) => {
@@ -65,6 +65,11 @@ event.on('home', (user, msg, action, next) => {
     send.keyboard(msg.from.id, locale('choose_action'), action, 2)
     next && next()
 })
+
+// event.on('register:home', (user, msg, action, next) => {
+//     send.keyboard(msg.from.id, locale('choose_action'), action, 2)
+//     next && next()
+// })
 
 // We export an event object
 exports.event = event

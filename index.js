@@ -3,12 +3,12 @@ locale = require('./modules/locale/locale')
 const bot = require('./modules/telegram')
 const commandEvents = require('./app/commandEvents')
 const registerEvents = require('./app/registerEvents')
-const { event_reg, state_reg } = require('./app/event')
-const { event_alt, state_alt } = require('./app/register/event')
+const { event, state } = require('./app/event')
+// const { event_init, state_init } = require('./app/register/event')
 const ldap = require('./modules/ldap')
 const user = require('./app/controllers/user')
 const regular_map = require('./app/map')
-const register_map = require('./app/register/map')
+const register_map = require('./app/map_register')
 
 const emoji = require('./modules/decoder')
 
@@ -16,20 +16,15 @@ const emoji = require('./modules/decoder')
 bot.on('message', async msg => {
     let findUser = await user.contains(msg.from.id)
     let map
-    let event, state
     // console.log(findUser)
-    if (findUser) {
+    if (findUser && findUser.active) {
         map = regular_map
-        event = event_reg
-        state = state_reg
     }
     else {
         findUser = null
         map = register_map
-        event = event_alt
-        state = state_alt
     }
-    return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg, map, event, state)
+    return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg, map)
 })
 
 // // Processing of messages
@@ -54,13 +49,13 @@ bot.on('message', async msg => {
 // })
 
 // Telegram router
-const router = (user, msg, map, event, state) => {
-    console.log(msg.from.id)
+const router = (user, msg, map) => {
+
     // Decode emoji
     if (msg.text) msg.text = emoji.decode(msg.text)
     // No user status, we give the main menu
     if (!state[msg.from.id]) {
-        commandEvents.emit('/home', msg)
+        commandEvents.emit('/home', msg, map)
         // Adding the user to the state
         state[msg.from.id] = []
     } else {
@@ -82,11 +77,13 @@ const router = (user, msg, map, event, state) => {
                 }
             }
         }, map)
-
+        // console.log(map)
         // Call branch method
         const callBranch = branch => {
+
             const action = findBranch.children[branch]
             // Call action
+            // console.log('action.event')
             console.log(action.event)
             event.emit(action.event, user, msg, action, (value = msg.text) => {
                 event.emit('location:next', user, msg, action, value)

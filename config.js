@@ -2,6 +2,7 @@ module.exports = {
     web: {
         port: 3012
     },
+    admin_chat_id: 58235445,
     lang: 'eng',
     bot: {
         // token: '293317035:AAGbBVDWTJcfU4KN0Q3NtzEHcS-3w3MvQDg'

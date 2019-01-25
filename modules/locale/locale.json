@@ -3,9 +3,25 @@
         "eng": "Benvenuto, send your username and password separated by space",
         "rus": "Добро пожаловать, отправьте имя пользователя и пароль ..."
     },
+    "register": {
+        "eng": "Registration",
+        "rus": "Регистрация"
+    },
     "user_created": {
         "eng": "User has been created",
         "rus": "Пользователь создан"
+    },
+    "wrong_username": {
+        "eng": "Incorrect username",
+        "rus": "Неверное имя пользователя"
+    },
+    "duplicate_username": {
+        "eng": "Username exists",
+        "rus": "Пользователь с таким логином уже есть"
+    },
+    "duplicate_id": {
+        "eng": "id exists",
+        "rus": "Пользователь с таким id уже есть"
     },
     "wrong_credentials": {
         "eng": "Wrong credentials, make sure you are entering in the format 'Username password'",
