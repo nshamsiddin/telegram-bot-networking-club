@@ -26,6 +26,14 @@ exports.createUser = (username, password, id) => {
     })
 }
 exports.findUser = async (username, id, event, action, next) => {
+    let user = {
+        id: id,
+        name: username,
+        department: 'getDepartment(info.dn)',
+        username: username
+    }
+    event.emit('username:right', user, action, next)
+    return
     await ad.findUser(username, (err, info) => {
         if (err) {
             console.log('err')

@@ -7,9 +7,10 @@ const bodyParser = require('body-parser')
 let bot = null
 
 bot = new TelegramBot(config.bot.token, {
-    polling: true, request: {
-        proxy: "http://127.0.0.1:15089"
-    },
+    polling: true, 
+    // request: {
+    //     proxy: "http://127.0.0.1:15089"
+    // },
 })
 
 module.exports = bot

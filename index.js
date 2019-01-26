@@ -1,4 +1,5 @@
-locale = require('./modules/locale/locale')
+locale = require('./modules/locale/locale').translate
+getTranslations = require('./modules/locale/locale').getTranslations
 
 const bot = require('./modules/telegram')
 const commandEvents = require('./app/commandEvents')
@@ -21,7 +22,6 @@ bot.on('message', async msg => {
         map = regular_map
     }
     else {
-        findUser = null
         map = register_map
     }
     return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg, map)
