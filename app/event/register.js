@@ -1,9 +1,6 @@
 const User = require('../controllers/user')
 const ldap = require('../../modules/ldap')
 const actions = require('../actions')
-// const config = require('../../config')
-// const ActiveDirectory = require('activedirectory')
-// const ad = new ActiveDirectory(config.ad)
 
 module.exports = async (event, state, map, send) => {
 
@@ -29,7 +26,7 @@ module.exports = async (event, state, map, send) => {
     })
 
     event.on('register:init', (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_username'), action, 2)
+        send.messageHiddenKeyboard(msg.from.id, locale('set_username'))
         next && next()
     })
 
@@ -37,8 +34,6 @@ module.exports = async (event, state, map, send) => {
     {
         event.on('register:username', (user, msg, action, next) => {
             ldap.findUser(msg.text, msg.from.id, event, action, next)
-            // send.keyboard(msg.from.id, locale('choose_action'), action, 2)
-            // next && next()
         })
 
         event.on('id:exists', (user) => {
@@ -59,7 +54,7 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('user:created', async (user, action, next) => {
-            send.keyboard(user.id, locale('set_job'), action, 2)
+            send.message(user.id, locale('set_job'))
             next && next()
         })
     }
@@ -68,8 +63,8 @@ module.exports = async (event, state, map, send) => {
     {
         event.on('register:job', async (user, msg, action, next) => {
             user.job = msg.text
-            User.save(user)
-            const buttons = [locale('male'), locale('female'), locale('back')]
+            await User.save(user)
+            const buttons = [locale('male'), locale('female')]
             send.keyboard(msg.from.id, locale('set_gender'), buttons, 2)
             next && next()
         })
@@ -77,19 +72,19 @@ module.exports = async (event, state, map, send) => {
 
     //gender handler
     {
-        event.on('register:gender', (user, msg, action, next) => {
+        event.on('register:gender', async (user, msg, action, next) => {
             let result
-            check_gender(user, msg.text, ['male', 'female']) ? result = 'success' : result = 'error'
+            await check_gender(user, msg.text, ['male', 'female']) ? result = 'success' : result = 'error'
             event.emit(`register:gender:${result}`, msg.from.id, action, next)
         })
 
-        function check_gender(user, text, list) {
+        async function check_gender(user, text, list) {
             for (let gender of list) {
                 const options = getTranslations(gender)
                 for (let translation in options) {
                     if (text === options[translation]) {
                         user.gender = gender
-                        User.save(user)
+                        await User.save(user)
                         return true
                     }
                 }
@@ -98,7 +93,7 @@ module.exports = async (event, state, map, send) => {
         }
 
         event.on('register:gender:error', (id) => {
-            const buttons = [locale('male'), locale('female'), locale('back')]
+            const buttons = [locale('male'), locale('female')]
             send.keyboard(id, locale('set_gender_error'), buttons, 2)
         })
 
@@ -113,14 +108,14 @@ module.exports = async (event, state, map, send) => {
     //photo handler
     {
         event.on('register:photo:upload', (user, msg, action, next) => {
-            send.keyboard(msg.from.id, locale('upload_photo'), action)
+            send.messageHiddenKeyboard(msg.from.id, locale('upload_photo'))
             next && next()
         })
 
-        event.on('register:photo:upload:await', (user, msg, action, next) => {
+        event.on('register:photo:upload:await', async (user, msg, action, next) => {
             if (msg.photo) {
                 user.photo = msg.photo.pop().file_id
-                User.save(user)
+                await User.save(user)
                 event.emit('registration:complete', user, msg)
             }
             else
@@ -129,7 +124,6 @@ module.exports = async (event, state, map, send) => {
 
         event.on('register:photo:choose', (user, msg, action, next) => {
             send.profile_photos(user.id)
-            // send.keyboard(msg.from.id, locale('choose_photo'), action)
             next && next()
         })
 
@@ -137,83 +131,15 @@ module.exports = async (event, state, map, send) => {
             send.profile_photos(user.id, msg.text)
         })
 
-        event.on('register:photo:error', (user, msg, action, next) => {
-            // send.keyboard(msg.from.id, locale('choose_action'), action, 2)
-            // next && next()
-        })
-
-        event.on('register:photo', (user, msg, action, next) => {
-            // send.keyboard(msg.from.id, locale('choose_action'), action, 2)
-            // next && next()
-        })
-
-
     }
 
-    event.on('registration:complete', (user, msg) => {
+    event.on('registration:complete', async (user, msg) => {
         user.active = true
-        User.save(user)
+        await User.save(user)
         send.messageHiddenKeyboard(user.id, locale('registration_complete'))
         setTimeout(function () {
             event.emit('location:home', user, msg)
         }, 3000)
     })
 
-}
-
-let file = {
-    message_id: 17212,
-    from:
-    {
-        id: 58235445,
-        is_bot: false,
-        first_name: 'Shamsiddin',
-        language_code: 'en'
-    },
-    chat: { id: 58235445, first_name: 'Shamsiddin', type: 'private' },
-    date: 1548529667,
-    document:
-    {
-        file_name: 'alltor_meWindows_10_1809_Updated.torrent',
-        mime_type: 'application/x-bittorrent',
-        file_id: 'BQADBAADIgQAAl9TaFJIirk7_9wWSwI',
-        file_size: 81495
-    }
-}
-let photo = {
-    message_id: 17213,
-    from:
-    {
-        id: 58235445,
-        is_bot: false,
-        first_name: 'Shamsiddin',
-        language_code: 'en'
-    },
-    chat: { id: 58235445, first_name: 'Shamsiddin', type: 'private' },
-    date: 1548529702,
-    photo:
-        [{
-            file_id: 'AgADBAADdq0xG19TaFJo3n6jHD9Ftqg9oBoABKPqPNqaUu37ylQHAAEC',
-            file_size: 1689,
-            width: 90,
-            height: 80
-        },
-        {
-            file_id: 'AgADBAADdq0xG19TaFJo3n6jHD9Ftqg9oBoABPUvbXcN9vs4y1QHAAEC',
-            file_size: 12216,
-            width: 320,
-            height: 286
-        },
-        {
-            file_id: 'AgADBAADdq0xG19TaFJo3n6jHD9Ftqg9oBoABG0HgF8MK52nzFQHAAEC',
-            file_size: 33557,
-            width: 800,
-            height: 716
-        },
-        {
-            file_id: 'AgADBAADdq0xG19TaFJo3n6jHD9Ftqg9oBoABL7eROMNRERnyVQHAAEC',
-            file_size: 50947,
-            width: 1144,
-            height: 1024
-        }]
 }

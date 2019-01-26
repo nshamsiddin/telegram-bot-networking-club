@@ -20,8 +20,8 @@
         "rus": "Пользователь с таким логином уже есть"
     },
     "duplicate_id": {
-        "eng": "id exists",
-        "rus": "Пользователь с таким id уже есть"
+        "eng": "Your accoun has an existing link",
+        "rus": "На ваш аккаунт уже привязана учётная запись"
     },
     "wrong_credentials": {
         "eng": "Wrong credentials, make sure you are entering in the format 'Username password'",

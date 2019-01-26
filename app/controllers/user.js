@@ -24,7 +24,7 @@ exports.create = (user, action, next) => {
                     return
                 }
                 if (doc.id === user.id) {
-                    event.emit('id:exists', user)
+                    event.emit('id:exists', user, action)
                     return
                 }
             }
