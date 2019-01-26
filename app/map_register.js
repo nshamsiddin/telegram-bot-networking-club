@@ -13,12 +13,24 @@ module.exports = {
                                 '*': {
                                     event: 'register:gender',
                                     children: {
-                                        '*': {
-                                            event: 'register:photo'
+                                        [locale('upload_photo')]: {
+                                            event: 'register:photo:upload',
+                                            children: {
+                                                '*': { event: 'register:photo:upload:await', await: true },
+                                                [locale('back')]: { event: 'location:back' }
+                                            }
                                         },
-                                        [locale('back')]: { event: 'register:location:back' }
+                                        [locale('choose_photo')]: {
+                                            event: 'register:photo:choose',
+                                            children: {
+                                                '*': { event: 'register:photo:choose:await', await: true },
+                                                [locale('back')]: { event: 'location:back' }
+                                            }
+                                        },
+                                        [locale('back')]: {
+                                            event: 'register:location:back'
+                                        }
                                     }
-        
                                 },
                                 [locale('back')]: { event: 'register:location:back' }
                             }

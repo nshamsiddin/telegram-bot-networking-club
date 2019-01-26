@@ -143,6 +143,10 @@
         "eng": "Choose gender",
         "rus": "Укажать пол"
     },
+    "set_gender_error": {
+        "eng": "Choose from the list",
+        "rus": "Выберите из списка"
+    },
     "set_photo": {
         "eng": "Choose method",
         "rus": "Выберите метод"

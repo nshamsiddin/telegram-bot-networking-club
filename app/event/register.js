@@ -42,28 +42,23 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('id:exists', (user) => {
-            console.log('id:exists')
             send.message(user.id, locale('duplicate_id'))
         })
 
         event.on('username:exists', (user) => {
-            console.log('username:exists')
             send.message(user.id, locale('duplicate_username'))
         })
 
         event.on('username:wrong', (id, username) => {
-            console.log('username:wrong')
             send.message(id, locale('wrong_username'))
             // send.keyboard(id, locale('choose_action'), action, 2)
         })
 
         event.on('username:right', (user, action, next) => {
-            console.log('username:right')
             User.create(user, action, next)
         })
 
         event.on('user:created', async (user, action, next) => {
-            console.log('user:created')
             send.keyboard(user.id, locale('set_job'), action, 2)
             next && next()
         })
@@ -71,30 +66,79 @@ module.exports = async (event, state, map, send) => {
 
     //job handler
     {
-        event.on('register:job', (user, msg, action, next) => {
-            console.log('register:job')
+        event.on('register:job', async (user, msg, action, next) => {
             user.job = msg.text
-            await User.save(user)
-            send.keyboard(msg.from.id, locale('choose_action'), action, 2)
-            next && next()
-        })
-    }
-    
-    //gender handler
-    {
-        event.on('register:gender', (user, msg, action, next) => {
-            
-            send.keyboard(msg.from.id, locale('choose_action'), action, 2)
+            User.save(user)
+            const buttons = [locale('male'), locale('female'), locale('back')]
+            send.keyboard(msg.from.id, locale('set_gender'), buttons, 2)
             next && next()
         })
     }
 
+    //gender handler
+    {
+        event.on('register:gender', (user, msg, action, next) => {
+            let result
+            check_gender(user, msg.text, ['male', 'female']) ? result = 'success' : result = 'error'
+            event.emit(`register:gender:${result}`, msg.from.id, action, next)
+        })
+
+        function check_gender(user, text, list) {
+            for (let gender of list) {
+                const options = getTranslations(gender)
+                for (let translation in options) {
+                    if (text === options[translation]) {
+                        user.gender = text
+                        User.save(user)
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+
+        event.on('register:gender:error', (id) => {
+            const buttons = [locale('male'), locale('female'), locale('back')]
+            send.keyboard(id, locale('set_gender_error'), buttons, 2)
+        })
+
+        event.on('register:gender:success', (id, action, next) => {
+            // const buttons = [locale('upload_photo'), locale('choose_photo'), locale('back')]
+            send.keyboard(id, locale('set_photo'), action, 2)
+            next && next()
+        })
+
+    }
+
     //photo handler
     {
-        event.on('register:photo', (user, msg, action, next) => {
-            console.log('register:photo')
-            send.keyboard(msg.from.id, locale('choose_action'), action, 2)
+        event.on('register:photo:upload', (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('upload_photo'), action, 2)
             next && next()
+        })
+
+        event.on('register:photo:upload:await', (user, msg, action, next) => {
+            console.log(msg)
+        })
+
+        event.on('register:photo:choose', (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('choose_photo'), action, 2)
+            next && next()
+        })
+
+        event.on('register:photo:choose:await', (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('choose_photo'), action, 2)
+            next && next()
+        })
+
+        event.on('register:photo:error', (user, msg, action, next) => {
+            // send.keyboard(msg.from.id, locale('choose_action'), action, 2)
+            // next && next()
+        })
+
+        event.on('register:photo', (user, msg, action, next) => {
+            // send.keyboard(msg.from.id, locale('choose_action'), action, 2)
+            // next && next()
         })
     }
 
