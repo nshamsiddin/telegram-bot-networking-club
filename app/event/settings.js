@@ -116,6 +116,7 @@ module.exports = (event, state, map, send) => {
     
     event.on('settings:delete:yes', async (user, msg, action, next) => {
         await User.delete(user)
+        state[user.id] = []
         send.messageHiddenKeyboard(msg.from.id, locale('deleted'))
     })
 

@@ -9,7 +9,8 @@ exports.message = (chat_id, message, options = {}) =>
 // Send photo
 exports.photo = (chat_id, file_id, caption) =>
     bot.sendPhoto(chat_id, file_id, {
-        caption: caption
+        caption: caption,
+        parse_mode: 'Markdown'
     })
 
 exports.error = async (id, err) =>
@@ -31,6 +32,9 @@ exports.question = (chat_id, options, file_id) => {
 exports.profile_photos = async (chat_id, index = 0) => {
     bot.getUserProfilePhotos(chat_id, { offset: 0 })
         .then(async p => {
+            console.log(p.photos)
+            console.log('index: ' + index)
+            console.log(p.photos[index])
             let size = p.photos.length
             let photo = p.photos[index][0].file_id
             bot.sendPhoto(chat_id, photo, {

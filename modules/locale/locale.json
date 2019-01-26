@@ -27,6 +27,10 @@
         "eng": "Wrong credentials, make sure you are entering in the format 'Username password'",
         "rus": "Неправильное им пользователя или пароль, 'Username password'"
     },
+    "registration_complete": {
+        "eng": "Registration complete",
+        "rus": "Регистрация завершена"
+    },
     "main": {
         "eng": "Choose action",
         "rus": "Выберите действие"
@@ -154,6 +158,10 @@
     "upload_photo": {
         "eng": "Upload photo",
         "rus": "Загрузите фото"
+    },
+    "upload_photo_error": {
+        "eng": "Upload a photo",
+        "rus": "Загрузите фотографию"
     },
     "choose_photo": {
         "eng": "From profile",

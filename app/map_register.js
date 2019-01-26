@@ -24,7 +24,7 @@ module.exports = {
                                             event: 'register:photo:choose',
                                             children: {
                                                 '*': { event: 'register:photo:choose:await', await: true },
-                                                [locale('back')]: { event: 'location:back' }
+                                                [locale('choose')]: { event: 'registration:complete' }
                                             }
                                         },
                                         [locale('back')]: {
