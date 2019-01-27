@@ -1,6 +1,6 @@
 const ee = require('events')
 const event = new ee.EventEmitter()
-const send = require('../../modules/bot')
+const send = require('../../modules/telegam')
 const map = require('../maps/map')
 const register_map = require('../maps/map_register')
 // Locking User Location

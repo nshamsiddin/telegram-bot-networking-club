@@ -1,8 +1,8 @@
-const config = require('../config')
+const config = require('../resources/config')
 const ActiveDirectory = require('activedirectory')
 const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
-const send = require('./bot')
+const send = require('./telegam')
 const { event, state } = require('../app/event')
 
 

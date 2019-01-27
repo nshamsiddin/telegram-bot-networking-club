@@ -1,6 +1,6 @@
 const shuffle = require('shuffle-array')
 
-const send = require('../modules/bot')
+const bot = require('../modules/telegam')
 const OPTIONS_QNTY = 3
 const QUIZ_SIZE = 3
 const REVIEW_QUIZ_SIZE = 10
@@ -124,7 +124,7 @@ exports.setAnswer = async (user_id, question_id, answer) => {
     }
     await Question.save(question)
 
-    send.message(user_id, text)
+    bot.message(user_id, text)
     await sleep(3000)
 }
 
@@ -175,9 +175,7 @@ exports.setParam = async (user, msg, param) => {
         active ? message += `\n${locale('activated')}` : active
     }
     User.save(user)
-    send.message(msg.from.id, message)
-
-
+    bot.message(msg.from.id, message)
 }
 
 function cast_gender(text) {

@@ -1,7 +1,7 @@
-locale = require('./modules/locale/locale').translate
-getTranslations = require('./modules/locale/locale').getTranslations
+locale = require('./modules/locale').translate
+getTranslations = require('./modules/locale').getTranslations
 
-const bot = require('./modules/bot').bot
+const bot = require('./modules/telegam').bot
 const commandEvents = require('./app/commandEvents')
 const { event, state } = require('./app/event')
 // const { event_init, state_init } = require('./app/register/event')
