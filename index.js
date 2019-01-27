@@ -14,16 +14,12 @@ const emoji = require('./modules/decoder')
 
 // Processing of messages
 bot.on('message', async msg => {
-    let findUser = await user.contains(msg.from.id)
-    let map
-    // console.log(findUser)
-    if (findUser && findUser.active) {
-        map = regular_map
+    if (msg.chat.type === 'private'){
+        let map
+        let findUser = await user.contains(msg.from.id)
+        findUser && findUser.active ? map = regular_map : map = register_map
+        return router(findUser, msg, map)
     }
-    else {
-        map = register_map
-    }
-    return router(findUser, msg, map)
 })
 
 
