@@ -1,6 +1,6 @@
 const ee = require('events')
 const event = new ee.EventEmitter()
-const send = require('./send')
+const send = require('../modules/bot')
 
 event.on('/start', msg => {
     send.message(msg.from.id, `/register`)

@@ -1,8 +1,8 @@
 const ee = require('events')
 const event = new ee.EventEmitter()
-const send = require('../send')
-const map = require('../map')
-const register_map = require('../map_register')
+const send = require('../../modules/bot')
+const map = require('../maps/map')
+const register_map = require('../maps/map_register')
 // Locking User Location
 const state = {}
 

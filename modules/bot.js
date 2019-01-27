@@ -1,6 +1,19 @@
-const bot = require('../modules/telegram')
-const emoji = require('../modules/decoder')
-const User = require('./controllers/user')
+process.env.NTBA_FIX_319 = 1;
+const emoji = require('./decoder')
+const User = require('../app/controllers/user')
+const TelegramBot = require('node-telegram-bot-api')
+const config = require('../config')
+
+let bot = null
+
+bot = new TelegramBot(config.bot.token, {
+    polling: true, 
+    // request: {
+    //     proxy: "http://127.0.0.1:15089"
+    // },
+})
+
+exports.bot = bot
 
 // Send message
 exports.message = (chat_id, message, options = {}) =>

@@ -2,7 +2,7 @@ const config = require('../config')
 const ActiveDirectory = require('activedirectory')
 const ad = new ActiveDirectory(config.ad)
 const User = require('../app/controllers/user')
-const send = require('../app/send')
+const send = require('./bot')
 const { event, state } = require('../app/event')
 
 

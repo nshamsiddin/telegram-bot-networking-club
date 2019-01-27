@@ -1,6 +1,6 @@
 const shuffle = require('shuffle-array')
 
-const send = require('./send')
+const send = require('../modules/bot')
 const OPTIONS_QNTY = 3
 const QUIZ_SIZE = 3
 const REVIEW_QUIZ_SIZE = 10

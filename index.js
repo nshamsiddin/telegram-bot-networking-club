@@ -1,15 +1,14 @@
 locale = require('./modules/locale/locale').translate
 getTranslations = require('./modules/locale/locale').getTranslations
 
-const bot = require('./modules/telegram')
+const bot = require('./modules/bot').bot
 const commandEvents = require('./app/commandEvents')
-const registerEvents = require('./app/registerEvents')
 const { event, state } = require('./app/event')
 // const { event_init, state_init } = require('./app/register/event')
 const ldap = require('./modules/ldap')
 const user = require('./app/controllers/user')
-const regular_map = require('./app/map')
-const register_map = require('./app/map_register')
+const regular_map = require('./app/maps/map')
+const register_map = require('./app/maps/map_register')
 
 const emoji = require('./modules/decoder')
 
@@ -61,8 +60,6 @@ const router = (user, msg, map) => {
 
             const action = findBranch.children[branch]
             // Call action
-            // console.log('action.event')
-            // console.log(action.event)
             event.emit(action.event, user, msg, action, (value = msg.text) => {
                 event.emit('location:next', user, msg, action, value)
             })
@@ -80,7 +77,6 @@ const router = (user, msg, map) => {
 
         // console trace
         // console.log(state[msg.from.id])
-        // setTimeout(() => console.log(state[msg.from.id]), 1000)
     }
 }
 
@@ -91,7 +87,7 @@ const botCommands = msg => {
     switch (msg.text) {
         case '/start':
             return commandEvents.emit('/start', msg)
-        case '/register':
-            return registerEvents.emit('register')
+        default:
+            return commandEvents.emit('/home', msg)
     }
 }
