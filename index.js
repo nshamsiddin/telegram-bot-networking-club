@@ -23,7 +23,7 @@ bot.on('message', async msg => {
     else {
         map = register_map
     }
-    return msg.entities && msg.entities.type === 'bot_command' ? botCommands(msg) : router(findUser, msg, map)
+    return router(findUser, msg, map)
 })
 
 
@@ -77,17 +77,5 @@ const router = (user, msg, map) => {
 
         // console trace
         // console.log(state[msg.from.id])
-    }
-}
-
-const botCommands = msg => {
-    // Clear the user path when executing commands
-    state[msg.from.id] = []
-    // Run the bot command
-    switch (msg.text) {
-        case '/start':
-            return commandEvents.emit('/start', msg)
-        default:
-            return commandEvents.emit('/home', msg)
     }
 }
