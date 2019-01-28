@@ -141,7 +141,7 @@
     },
     "set_job": {
         "eng": "Enter job",
-        "rus": "Введите работу"
+        "rus": "Введите профессию"
     },
     "set_gender": {
         "eng": "Choose gender",
