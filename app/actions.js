@@ -37,7 +37,6 @@ exports.generateQuiz = async (type, user) => {
         switch (type) {
             case 'new':
                 for (let i = 0; i < usersList.length && i < REVIEW_QUIZ_SIZE; i++) {
-                    console.log('tset')
                     let question = await Question.add(quiz._id)
                     question.type = type
                     let option = {
@@ -72,13 +71,19 @@ exports.generateQuiz = async (type, user) => {
                         }
                     }
 
+                    console.log('OPTIONS')
                     // Populate options
                     while (options.length < OPTIONS_QNTY) {
                         let option = getOption(false, usersList)
-                        if (options.indexOf(option) === -1) {
+                        console.log(options)
+                        console.log(option)
+                        options.filter(p => p.text)
+                        if (!options.some(p => p.text === option.text)){
+                        // if (options.indexOf(option) === -1) {
                             options.push(option)
                         }
                     }
+                    console.log('/OPTIONS')
 
                     shuffle(options)
                     question.options = options
