@@ -1,6 +1,9 @@
 const Model = require('../models/user')
 const { event } = require('../event')
 
+const init = (() => {
+    Model.User.remove({ active: false })
+})
 
 // const ad = require('../activedirectory')
 // Get user
