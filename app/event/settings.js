@@ -9,7 +9,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('choose_action'), action, 5)
+        send.keyboard(msg.from.id, locale('choose_action'), action, 4)
         next && next()
     })
 
