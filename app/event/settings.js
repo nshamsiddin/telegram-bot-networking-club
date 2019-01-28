@@ -23,8 +23,6 @@ module.exports = (event, state, map, send) => {
         event.emit('location:back', user, msg)
     })
 
-    
-
     event.on('settings:set:department', async (user, msg, action, next) => {
         send.keyboard(msg.from.id, locale('set_department'), action)
         next && next()
@@ -35,66 +33,120 @@ module.exports = (event, state, map, send) => {
         event.emit('location:back', user, msg)
     })
 
-    event.on('settings:set:name', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_name'), action)
-        next && next()
-    })
 
-    event.on('settings:set:name:await', async (user, msg, action, next) => {
-        actions.setParam(user, msg, 'name')
-        event.emit('location:back', user, msg)
-    })
+    //name handler
+    {
+        event.on('settings:set:name', async (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('set_name'), action)
+            next && next()
+        })
 
-    event.on('settings:set:job', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_job'), action)
-        next && next()
-    })
+        event.on('settings:set:name:await', async (user, msg, action, next) => {
+            if (msg.text.length < 128) {
+                user.name = msg.text
+                await User.save(user)
+                event.emit('settings:set:success', user, msg)
+            }
+            else {
+                send.message(msg.from.id, locale('set_name_error'))
+            }
+        })
+    }
 
-    event.on('settings:set:job:await', async (user, msg, action, next) => {
-        await actions.setParam(user, msg, 'job')
-        event.emit('location:back', user, msg)
-    })
+    //job handler
+    {
+        event.on('settings:set:job', async (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('set_job'), action)
+            next && next()
+        })
 
-    event.on('settings:set:photo', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_photo'), action)
-        next && next()
-    })
+        event.on('settings:set:job:await', async (user, msg, action, next) => {
+            if (msg.text.length < 128) {
+                user.job = msg.text
+                await User.save(user)
+                event.emit('settings:set:success', user, msg)
+            }
+            else {
+                send.message(msg.from.id, locale('set_name_error'))
+            }
+        })
+    }
 
-    event.on('settings:set:photo:upload', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('upload_photo'), action)
-        next && next()
-    })
+    //photo handler
+    {
+        event.on('settings:set:photo', async (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('set_photo'), action)
+            next && next()
+        })
 
-    event.on('settings:set:photo:await', async (user, msg, action, next) => {
-        if (msg.photo) {
-            msg.text = msg.photo[msg.photo.length - 1].file_id
-            actions.setParam(user, msg, 'photo')
-            event.emit('location:back', user, msg)
+        event.on('settings:set:photo:upload', async (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('upload_photo'), action)
+            next && next()
+        })
+
+        event.on('settings:set:photo:await', async (user, msg, action, next) => {
+            if (msg.photo) {
+                msg.text = msg.photo[msg.photo.length - 1].file_id
+                actions.setParam(user, msg, 'photo')
+                event.emit('location:back', user, msg)
+            }
+            else {
+                send.message(msg.from.id, locale('no_photo_detected'))
+                event.emit('location:back', user, msg)
+            }
+        })
+
+        event.on('settings:set:photo:profile', async (user, msg, action, next) => {
+            await send.profile_photos(user.id)
+            next && next()
+        })
+
+        event.on('settings:set:photo:profile:await', async (user, msg, action, next) => {
+            await send.profile_photos(user.id, msg.text)
+            // await setParam(user, msg, action, next, 'photo')
+        })
+
+    }
+
+    //gender handler
+    {
+        event.on('settings:set:gender', async (user, msg, action, next) => {
+            send.keyboard(msg.from.id, locale('set_gender'), action)
+            next && next()
+        })
+
+        event.on('settings:set:gender:await', async (user, msg, action, next) => {
+            let result = cast_gender(msg.text)
+            if (result) {
+                user.gender = result
+                await User.save(user)
+                event.emit('settings:set:success', user, msg)
+            }
+            else {
+                send.message(msg.from.id, locale('set_gender_error'))
+            }
+        })
+
+        function cast_gender(text) {
+            const genders = ['male', 'female']
+            for (let gender of genders) {
+                const options = getTranslations(gender)
+                for (let translation in options) {
+                    if (text === options[translation]) {
+                        return gender
+                    }
+                }
+            }
+            return false
         }
-        else {
-            send.message(msg.from.id, locale('no_photo_detected'))
+
+    }
+
+    event.on('settings:set:success', (user, msg) => {
+        send.message(msg.from.id, locale('change_success'))
+        setTimeout(() => {
             event.emit('location:back', user, msg)
-        }
-    })
-
-    event.on('settings:set:photo:profile', async (user, msg, action, next) => {
-        await send.profile_photos(user.id)
-        next && next()
-    })
-    
-    event.on('settings:set:photo:profile:await', async (user, msg, action, next) => {
-        await send.profile_photos(user.id, msg.text)
-        // await setParam(user, msg, action, next, 'photo')
-    })
-
-    event.on('settings:set:gender', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_gender'), action)
-        next && next()
-    })
-
-    event.on('settings:set:gender:await', async (user, msg, action, next) => {
-        actions.setParam(user, msg, 'gender')
-        event.emit('location:back', user, msg)
+        }, 1000)
     })
 
     event.on('settings:reset', async (user, msg, action, next) => {
@@ -112,7 +164,7 @@ module.exports = (event, state, map, send) => {
         send.keyboard(msg.from.id, locale('confirm'), action)
         next && next()
     })
-    
+
     event.on('settings:delete:yes', async (user, msg, action, next) => {
         await User.delete(user)
         state[user.id] = []
