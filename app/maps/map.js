@@ -48,13 +48,13 @@ module.exports = {
                                 [locale('back')]: { event: 'location:back' }
                             }
                         },
-                        [locale('department')]: {
+                        /*[locale('department')]: {
                             event: 'settings:set:department',
                             children: {
                                 '*': { event: 'settings:set:department:await', await: true },
                                 [locale('back')]: { event: 'location:back' }
                             }
-                        },
+                        },*/
                         [locale('job')]: {
                             event: 'settings:set:job',
                             children: {
