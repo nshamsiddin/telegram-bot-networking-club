@@ -147,6 +147,10 @@
         "eng": "Enter name",
         "rus": "Введите имя"
     },
+    "set_name_error": {
+        "eng": "Name is too long",
+        "rus": "Длина текста больше чем поддерживает телеграм"
+    },
     "set_department": {
         "eng": "Choose department",
         "rus": "Выберите дирекцию"
