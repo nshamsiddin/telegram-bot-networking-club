@@ -166,19 +166,22 @@ exports.addToList = async (user, answer) => {
 exports.setParam = async (user, msg, param) => {
     let message = locale('change_success')
     param === 'gender' ? user[param] = cast_gender(msg.text) : user[param] = msg.text
-    if (!user.active) {
-        let active = true
-        required_params.map(p => !user[p.name] ? active = false : active)
-        user.active = active
-        active ? message += `\n${locale('activated')}` : active
-    }
-    User.save(user)
+    await User.save(user)
     bot.message(msg.from.id, message)
 }
 
 function cast_gender(text) {
-    if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(text) !== -1)
-        return 'male'
-    if (['female', 'Female', 'женшина', 'Женшина'].indexOf(text) !== -1)
-        return 'female'
+    const genders = ['male', 'female']
+    for (let gender of genders) {
+        const options = getTranslations(gender)
+        for (let translation in options) {
+            if (text === options[translation]) {
+                return gender
+            }
+        }
+    }
+    // if (['male', 'Male', 'мужчина', 'Мужчина'].indexOf(text) !== -1)
+    //     return 'male'
+    // if (['female', 'Female', 'женшина', 'Женшина'].indexOf(text) !== -1)
+    //     return 'female'
 }
