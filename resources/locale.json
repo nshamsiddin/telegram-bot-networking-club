@@ -4,8 +4,8 @@
         "rus": "Добро пожаловать, отправьте имя пользователя и пароль ..."
     },
     "register": {
-        "eng": "Registration",
-        "rus": "Регистрация"
+        "eng": "🔵 Registration",
+        "rus": "🔵 Регистрация"
     },
     "register_init": {
         "eng": "Please register to start using the bot",
@@ -40,104 +40,104 @@
         "rus": "Выберите действие"
     },
     "progress": {
-        "eng": "Current progress",
-        "rus": "Текущий прогресс"
+        "eng": "📊 Current progress",
+        "rus": "📊 Текущий прогресс"
     },
     "quiz": {
-        "eng": "Quiz",
-        "rus": "Викторина"
+        "eng": "🎲 Quiz",
+        "rus": "🎲 Викторина"
     },
     "quiz_new": {
-        "eng": "New",
-        "rus": "Новые"
+        "eng": "🆕 New",
+        "rus": "🆕 Новые"
     },
     "quiz_name": {
-        "eng": "By name",
-        "rus": "По ФИО"
+        "eng": "👔 By name",
+        "rus": "👔 По ФИО"
     },
     "quiz_job": {
-        "eng": "By job",
-        "rus": "По профессии"
+        "eng": "💼 By job",
+        "rus": "💼 По профессии"
     },
     "edit_info": {
-        "eng": "Edit info",
-        "rus": "Редактировать"
+        "eng": "✏ Edit info",
+        "rus": "✏ Редактировать"
     },
     "department": {
-        "eng": "Department",
-        "rus": "Дирекция"
+        "eng": "🏬 Department",
+        "rus": "🏬 Дирекция"
     },
     "name": {
-        "eng": "Name",
-        "rus": "ФИО"
+        "eng": "👔 Name",
+        "rus": "👔 ФИО"
     },
     "username": {
-        "eng": "Username",
-        "rus": "Пользователь"
+        "eng": "👥 Username",
+        "rus": "👥 Пользователь"
     },
     "job": {
-        "eng": "Job",
-        "rus": "Профессия"
+        "eng": "💼 Job",
+        "rus": "💼 Профессия"
     },
     "photo": {
-        "eng": "Photo",
-        "rus": "Фото"
+        "eng": "📷 Photo",
+        "rus": "📷 Фото"
     },
     "gender": {
-        "eng": "Gender",
-        "rus": "Пол"
+        "eng": "♀️♂️ Gender",
+        "rus": "♀️♂️ Пол"
     },
     "settings": {
-        "eng": "Settings",
-        "rus": "Настройки"
+        "eng": "🛠 Settings",
+        "rus": "🛠 Настройки"
     },
     "reset": {
-        "eng": "Reset progress",
-        "rus": "Сбросить прогресс"
+        "eng": "⚪ Reset progress",
+        "rus": "⚪ Сбросить прогресс"
     },
     "delete": {
-        "eng": "Delete account",
-        "rus": "Удалить аккаунт"
+        "eng": "🔴 Delete account",
+        "rus": "🔴 Удалить аккаунт"
     },
     "back": {
-        "eng": "Back",
-        "rus": "Назад"
+        "eng": "🔙 Back",
+        "rus": "🔙 Назад"
     },
     "yes": {
-        "eng": "Yes",
-        "rus": "Да"
+        "eng": "✅ Yes",
+        "rus": "✅ Да"
     },
     "correct": {
-        "eng": "That is correct; Well done",
-        "rus": "Правильно; Молодец; Так держать"
+        "eng": "That is correct ✔;Well done 💪",
+        "rus": "Правильно ✔;Молодец ✅;Так держать 💪"
     },
     "incorrect": {
-        "eng": "Incorrect; No worries",
-        "rus": "Неверно; Не волнуйся, иди дальше"
+        "eng": "Incorrect ✘; No worries ✖",
+        "rus": "Неверно; Не волнуйся, продолжай 👉"
     },
     "no": {
-        "eng": "No",
-        "rus": "Нет"
+        "eng": "❌ No",
+        "rus": "❌ Нет"
     },
     "know": {
-        "eng": "I know him",
-        "rus": "Знаю"
+        "eng": "🤘 I know him",
+        "rus": "🤔 Знаю"
     },
     "remember": {
-        "eng": "Remember",
-        "rus": "Запомнить"
+        "eng": "📌 Remember",
+        "rus": "📌 Запомнить"
     },
     "no_quiz": {
         "eng": "*No quizzes here for you*",
         "rus": "Для вас нет вопросов в этом разделе"
     },
     "male": {
-        "eng": "Male",
-        "rus": "Мужчина"
+        "eng": "♂️ Male",
+        "rus": "♂️ Мужчина"
     },
     "female": {
-        "eng": "Female",
-        "rus": "Женшина"
+        "eng": "♀️️ Female",
+        "rus": "♀️️ Женшина"
     },
     "set_username": {
         "eng": "Enter username",
@@ -152,40 +152,40 @@
         "rus": "Выберите дирекцию"
     },
     "set_job": {
-        "eng": "Enter job",
-        "rus": "Введите профессию"
+        "eng": "💼 Enter profession",
+        "rus": "💼 Введите профессию"
     },
     "set_gender": {
         "eng": "Choose gender",
         "rus": "Указать пол"
     },
     "set_gender_error": {
-        "eng": "Choose from the list",
-        "rus": "Выберите из списка"
+        "eng": "Choose from the list 👇",
+        "rus": "Выберите из списка 👇"
     },
     "set_photo": {
-        "eng": "Choose method",
-        "rus": "Выберите метод"
+        "eng": "Choose method 👇",
+        "rus": "Выберите метод 👇"
     },
     "upload_photo": {
-        "eng": "Upload photo",
-        "rus": "Загрузите фото"
+        "eng": "🔼 Upload photo",
+        "rus": "🔼 Загрузите фото"
     },
     "upload_photo_error": {
-        "eng": "Upload a photo",
-        "rus": "Загрузите файл как фото"
+        "eng": "Upload item as photo 🖼️",
+        "rus": "Загрузите файл как фото 🖼️"
     },
     "choose_photo": {
-        "eng": "From profile",
-        "rus": "Из фото профиля"
+        "eng": "🖼️ From profile",
+        "rus": "🖼️ Из фото профиля"
     },
     "choose": {
         "eng": "Choose",
         "rus": "Выбрать"
     },
     "choose_action": {
-        "eng": "Choose action",
-        "rus": "Выберите действие"
+        "eng": "Choose action 👇",
+        "rus": "Выберите действие 👇"
     },
     "choose_quiz_type": {
         "eng": "Choose quiz type",
@@ -216,8 +216,8 @@
         "rus": "Вы уверены?"
     },
     "quiz_completed": {
-        "eng": "Quiz completed",
-        "rus": "Викторина завершена"
+        "eng": "Quiz completed ✨",
+        "rus": "Викторина завершена ✨"
     },
     "no_photo_detected": {
         "eng": "No photo sent",
