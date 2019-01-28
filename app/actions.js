@@ -29,7 +29,6 @@ exports.generateQuiz = async (type, user) => {
     const correct_answers = []
     let usersList = null
     usersList = await User.generateList(user, type)
-    console.log(usersList.length)
     if (usersList.length < 1) {
         return null;
     }
@@ -80,7 +79,6 @@ exports.generateQuiz = async (type, user) => {
                             options.push(option)
                         }
                     }
-                    console.log('/OPTIONS')
 t
                     shuffle(options)
                     question.options = options
@@ -148,7 +146,7 @@ function randomizeMessage(message) {
 
 exports.addToList = async (user, answer) => {
     let question = await Question.get(user.last_question)
-    // console.log(question.correct_answer.id)
+    // (question.correct_answer.id)
     question.given_answer = answer
 
 
@@ -156,12 +154,10 @@ exports.addToList = async (user, answer) => {
         case locale('know'):
             question.correct_answer.id
                 && user.ignore_list.push(question.correct_answer.id)
-                && console.log('added to ignore' + question.correct_answer.id)
             break
         case locale('remember'):
             question.correct_answer.id
                 && user.white_list.push(question.correct_answer.id)
-                && console.log('added to white list' + question.correct_answer.id)
             break
     }
     await User.save(user)

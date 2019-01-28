@@ -93,7 +93,6 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set:gender:await', async (user, msg, action, next) => {
-        console.log('seggin gender')
         actions.setParam(user, msg, 'gender')
         event.emit('location:back', user, msg)
     })

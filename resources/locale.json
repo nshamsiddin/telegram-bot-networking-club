@@ -49,7 +49,7 @@
     },
     "edit_info": {
         "eng": "Edit info",
-        "rus": "Редактировать информацию"
+        "rus": "Редактировать"
     },
     "department": {
         "eng": "Department",
@@ -129,11 +129,11 @@
     },
     "set_username": {
         "eng": "Enter username",
-        "rus": "Укажать имя пользователя"
+        "rus": "Введите имя пользователя"
     },
     "set_name": {
         "eng": "Enter name",
-        "rus": "Укажать имя"
+        "rus": "Введите имя"
     },
     "set_department": {
         "eng": "Choose department",
@@ -141,11 +141,11 @@
     },
     "set_job": {
         "eng": "Enter job",
-        "rus": "Укажать работу"
+        "rus": "Введите работу"
     },
     "set_gender": {
         "eng": "Choose gender",
-        "rus": "Укажать пол"
+        "rus": "Указать пол"
     },
     "set_gender_error": {
         "eng": "Choose from the list",
@@ -161,11 +161,11 @@
     },
     "upload_photo_error": {
         "eng": "Upload a photo",
-        "rus": "Загрузите фотографию"
+        "rus": "Загрузите файл как фото"
     },
     "choose_photo": {
         "eng": "From profile",
-        "rus": "Из аватарок"
+        "rus": "Из фото профиля"
     },
     "choose": {
         "eng": "Choose",

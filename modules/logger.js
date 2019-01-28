@@ -13,6 +13,5 @@ module.exports = (msg, script, user) => {
         message += `${item} : \`${err[item]}\`\n`
         entry += `${item}:\t${err[item]}\n`
     }
-    console.log(entry)
     send.message(config.admin_id, message, { parse_mode: 'markdown' })
 }
