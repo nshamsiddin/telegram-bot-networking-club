@@ -7,6 +7,10 @@
         "eng": "Registration",
         "rus": "Регистрация"
     },
+    "register_init": {
+        "eng": "Please register to start using the bot",
+        "rus": "Пожалуйста зарегистрируйтесь чтобы начать пользоваться ботом"
+    },
     "user_created": {
         "eng": "User has been created",
         "rus": "Пользователь создан"
