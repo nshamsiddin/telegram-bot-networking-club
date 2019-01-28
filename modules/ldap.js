@@ -57,7 +57,7 @@ exports.findUser = async (username, id, event, action, next) => {
                 event.emit('username:right', user, action, next)
             }
             catch (e) {
-                console.log(e)
+                logger(e, __filename, null)
             }
         }
         else {
