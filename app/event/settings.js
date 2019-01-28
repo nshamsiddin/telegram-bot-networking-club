@@ -36,7 +36,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set:name', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_username'), action)
+        send.keyboard(msg.from.id, locale('set_name'), action)
         next && next()
     })
 
