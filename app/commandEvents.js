@@ -7,7 +7,7 @@ event.on('/start', msg => {
 })
 
 event.on('/home', (msg, map) => {
-    send.keyboard(msg.from.id, locale('register_init'), map, 2)
+    send.keyboard(msg.from.id, locale('choose_action'), map, 2)
 })
 
 
