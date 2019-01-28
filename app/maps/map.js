@@ -12,7 +12,7 @@ module.exports = {
                         [locale('remember')]: { event: 'quiz:new:await:no' }
                     }
                 },
-                [locale('name')]: {
+                [locale('quiz_name')]: {
                     event: 'quiz:name',
                     children: {
                         '*': {
@@ -22,7 +22,7 @@ module.exports = {
                         [locale('back')]: { event: 'location:back' }
                     }
                 },
-                [locale('job')]: {
+                [locale('quiz_job')]: {
                     event: 'quiz:job',
                     children: {
                         '*': {
@@ -41,6 +41,26 @@ module.exports = {
                 [locale('edit_info')]: {
                     event: 'settings:set',
                     children: {
+                        [locale('photo')]: {
+                            event: 'settings:set:photo',
+                            children: {
+                                [locale('upload_photo')]: {
+                                    event: 'settings:set:photo:upload',
+                                    children: {
+                                        '*': { event: 'settings:set:photo:await', await: true },
+                                        [locale('back')]: { event: 'location:back' }
+                                    }
+                                },
+                                [locale('choose_photo')]: {
+                                    event: 'settings:set:photo:profile',
+                                    children: {
+                                        '*': { event: 'settings:set:photo:profile:await', await: true },
+                                        [locale('choose')]: { event: 'location:back' }
+                                    }
+                                },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
                         [locale('name')]: {
                             event: 'settings:set:name',
                             children: {
@@ -62,26 +82,7 @@ module.exports = {
                                 [locale('back')]: { event: 'location:back' }
                             }
                         },
-                        [locale('photo')]: {
-                            event: 'settings:set:photo',
-                            children: {
-                                [locale('upload_photo')]: {
-                                    event: 'settings:set:photo:upload',
-                                    children: {
-                                        '*': { event: 'settings:set:photo:await', await: true },
-                                        [locale('back')]: { event: 'location:back' }
-                                    }
-                                },
-                                [locale('choose_photo')]: {
-                                    event: 'settings:set:photo:profile',
-                                    children: {
-                                        '*': { event: 'settings:set:photo:profile:await', await: true },
-                                        [locale('choose')]: { event: 'location:back' }
-                                    }
-                                },
-                                [locale('back')]: { event: 'location:back' }
-                            }
-                        },
+
                         [locale('gender')]: {
                             event: 'settings:set:gender',
                             children: {
