@@ -47,6 +47,14 @@
         "eng": "New",
         "rus": "Новые"
     },
+    "quiz_name": {
+        "eng": "By name",
+        "rus": "По ФИО"
+    },
+    "quiz_job": {
+        "eng": "By job",
+        "rus": "По профессии"
+    },
     "edit_info": {
         "eng": "Edit info",
         "rus": "Редактировать"

@@ -1,13 +1,20 @@
 const emoji = {
-    Back: '🔙',
-    'Delete account': '❌',
-    'Reset progress': '🔵',
-    Редактировать: '✂',
-    'Создать задание': '✏️',
-    Активность: '📈',
-    Аккаунты: '🚶',
-    Публикации: '🎞',
-    Лимиты: '🚦'
+    [locale('back')]: '🔙',
+    [locale('progress')]: '📊',
+    [locale('settings')]: '🛠',
+    [locale('quiz')]: '🎲',
+    [locale('edit_info')]: '✏',
+    [locale('quiz_new')]: '🆕',
+    [locale('quiz_name')]: '👔',
+    [locale('quiz_job')]: '💼',
+    [locale('name')]: '👔',
+    [locale('job')]: '💼',
+    [locale('photo')]: '📷',
+    [locale('gender')]: '♀️♂️',
+    [locale('male')]: '♂️',
+    [locale('female')]: '♀️️',
+    [locale('reset')]: '⚪',
+    [locale('delete')]: '🔴',
 }
 
 // Добавляем эмодзи
