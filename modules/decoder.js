@@ -10,6 +10,8 @@ const emoji = {
     [locale('name')]: '👔',
     [locale('job')]: '💼',
     [locale('photo')]: '📷',
+    [locale('upload_photo')]: '🔼',
+    [locale('choose_photo')]: '🖼️',
     [locale('gender')]: '♀️♂️',
     [locale('male')]: '♂️',
     [locale('female')]: '♀️️',
