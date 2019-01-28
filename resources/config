@@ -6,7 +6,8 @@ module.exports = {
     lang: 'rus',
     bot: {
         // token: '293317035:AAGbBVDWTJcfU4KN0Q3NtzEHcS-3w3MvQDg'
-        token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s'
+        //token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s',
+	token: '699149533:AAEP4zsepMfb0WMJTHXzR_Gs6b_T32Tp3gA'
     },
     domain:{
         name: 'UNITEL_MAIN'
