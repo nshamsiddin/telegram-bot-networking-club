@@ -15,11 +15,13 @@ const emoji = require('./modules/decoder')
 
 // Processing of messages
 bot.on('message', async msg => {
-    if (msg.chat.type === 'private'){
+    if (msg.chat.type === 'private') {
         let map
         let findUser = await user.contains(msg.from.id)
         findUser && findUser.active ? map = regular_map : map = register_map
-        return router(findUser, msg, map)
+        return msg.entities && msg.entities.pop().type === 'bot_command'
+            ? botCommands(msg)
+            : router(findUser, msg, map)
     }
 })
 
@@ -73,5 +75,16 @@ const router = (user, msg, map) => {
 
         // console trace
         // console.log(state[msg.from.id])
+    }
+}
+
+const botCommands = (msg) => {
+    // Clear the user path when executing commands
+    state[msg.from.id] = []
+
+    // Run the bot command
+    switch (msg.text) {
+        case '/start':
+            return commandEvents.emit('/start', msg)
     }
 }

@@ -1,5 +1,5 @@
 const emoji = {
-    [locale('back')]: '🔙',
+    [locale('register')]: '🔵',
     [locale('progress')]: '📊',
     [locale('settings')]: '🛠',
     [locale('quiz')]: '🎲',
@@ -17,6 +17,7 @@ const emoji = {
     [locale('female')]: '♀️️',
     [locale('reset')]: '⚪',
     [locale('delete')]: '🔴',
+    [locale('back')]: '🔙',
 }
 
 // Добавляем эмодзи
