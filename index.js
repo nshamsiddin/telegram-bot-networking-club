@@ -1,4 +1,5 @@
 locale = require('./modules/locale').translate
+logger = require('./modules/logger')
 getTranslations = require('./modules/locale').getTranslations
 
 const bot = require('./modules/telegam').bot
@@ -21,7 +22,6 @@ bot.on('message', async msg => {
         return router(findUser, msg, map)
     }
 })
-
 
 const router = (user, msg, map) => {
 

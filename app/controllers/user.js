@@ -14,7 +14,7 @@ exports.contains = async id => Model.User.findOne({ id: id })
 exports.create = (user, action, next) => {
     Model.User.findOne({ $or: [{ id: user.id }, { username: user.username }] }, async (err, doc) => {
         if (err) {
-            event.emit('mongo:error', JSON.stringify(err), user) // for admin
+            logger(err, __filename, id)
             return
         }
         else
@@ -31,7 +31,7 @@ exports.create = (user, action, next) => {
             else {
                 await new Model.User(user).save((err, new_user) => {
                     if (err) {
-                        event.emit('mongo:error', JSON.stringify(err), user)
+                        logger(err, __filename, id)
                         return
                     }
                     else {
@@ -79,6 +79,10 @@ exports.generateList = async (user, type) => {
         visible: true, active: true
     }, { '_id': 0, '__v': 0 },
         (err, users) => {
+            if (err) {
+                logger(err, __filename, id)
+                return
+            }
             result = users.filter((u) => {
                 return (type === 'new'
                     ? !user.white_list.includes(u.id)

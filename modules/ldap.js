@@ -8,9 +8,16 @@ const { event, state } = require('../app/event')
 
 exports.createUser = (username, password, id) => {
     ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
-        if (err) console.log(err)
+        if (err) {
+            logger(err, __filename, id)
+            return
+        }
         if (auth) {
             ad.findUser(username, (err, info) => {
+                if (err) {
+                    logger(err, __filename, id)
+                    return
+                }
                 let user = {
                     id: id,
                     name: info.displayName,
@@ -26,17 +33,18 @@ exports.createUser = (username, password, id) => {
     })
 }
 exports.findUser = async (username, id, event, action, next) => {
-    let user = {
-        id: id,
-        name: username,
-        department: 'getDepartment(info.dn)',
-        username: username
-    }
-    event.emit('username:right', user, action, next)
-    return
+    // let user = {
+    //     id: id,
+    //     name: username,
+    //     department: 'getDepartment(info.dn)',
+    //     username: username
+    // }
+    // event.emit('username:right', user, action, next)
+    // return
     await ad.findUser(username, (err, info) => {
         if (err) {
-            console.log('err')
+            logger(err, __filename, id)
+            return
         }
         if (info) {
             try {

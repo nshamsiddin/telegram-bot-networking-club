@@ -71,12 +71,9 @@ exports.generateQuiz = async (type, user) => {
                         }
                     }
 
-                    console.log('OPTIONS')
                     // Populate options
                     while (options.length < OPTIONS_QNTY) {
                         let option = getOption(false, usersList)
-                        console.log(options)
-                        console.log(option)
                         options.filter(p => p.text)
                         if (!options.some(p => p.text === option.text)){
                         // if (options.indexOf(option) === -1) {
@@ -84,7 +81,7 @@ exports.generateQuiz = async (type, user) => {
                         }
                     }
                     console.log('/OPTIONS')
-
+t
                     shuffle(options)
                     question.options = options
                     question.user = user._id

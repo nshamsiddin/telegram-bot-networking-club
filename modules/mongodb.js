@@ -8,7 +8,9 @@ mongoose.connect(config.mongodb.url, {
 
 const db = mongoose.connection
 
-db.on('error', err => console.log('connection error:', err.message))
+db.on('error', (err) => {
+    logger(err.message, __filename, null)
+})
 
 // MongoDB
 exports.mongoose = mongoose
