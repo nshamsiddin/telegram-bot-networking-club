@@ -46,3 +46,11 @@ exports.decode = text => {
 
     return text
 }
+
+const numbers = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+exports.emojify = number => {
+    if (number && !isNaN(number))
+        return number.toString().split('').map(p => numbers[p]).join('')
+    else
+        return null
+}
