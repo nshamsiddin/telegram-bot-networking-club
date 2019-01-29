@@ -10,7 +10,7 @@ const state = {}
 // My components
 const settings = require('./settings')(event, state, map, send)
 const quiz = require('./quiz')(event, state, map, send)
-const action = require('./action')(event, state, map, send)
+const stats = require('./stats')(event, state, map, send)
 const register = require('./register')(event, state, register_map, send)
 
 // Change the location of the user

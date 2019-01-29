@@ -1,7 +1,14 @@
 module.exports = {
     event: 'home',
     children: {
-        [locale('progress')]: { event: 'progress' },
+        [locale('stats')]: {
+            event: 'stats',
+            children: {
+                [locale('progress')]: { event: 'stats:progress' },
+                [locale('top')]: { event: 'stats:top' },
+                [locale('back')]: { event: 'location:back' }
+            }
+        },
         [locale('quiz')]: {
             event: 'quiz',
             children: {
