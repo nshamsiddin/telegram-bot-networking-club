@@ -39,9 +39,25 @@
         "eng": "Choose action",
         "rus": "Выберите действие"
     },
+    "about_me": {
+        "eng": "ℹ️ About me",
+        "rus": "ℹ️ Обо мне"
+    },
+    "stats": {
+        "eng": "📊 Stats",
+        "rus": "📊 Статистика"
+    },
     "progress": {
-        "eng": "📊 Current progress",
-        "rus": "📊 Текущий прогресс"
+        "eng": "📈 Current progress",
+        "rus": "📈 Текущий прогресс"
+    },
+    "top": {
+        "eng": "🔝 Top users",
+        "rus": "🔝 Топ пользователей"
+    },
+    "quizzes_completed": {
+        "eng": "Quizzes completed",
+        "rus": "Пройдено викторин"
     },
     "quiz": {
         "eng": "🎲 Quiz",
