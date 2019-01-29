@@ -1,16 +1,13 @@
 locale = require('./modules/locale').translate
-logger = require('./modules/logger')
 getTranslations = require('./modules/locale').getTranslations
+logger = require('./modules/logger')
 
 const bot = require('./modules/telegam').bot
 const commandEvents = require('./app/commandEvents')
 const { event, state } = require('./app/event')
-// const { event_init, state_init } = require('./app/register/event')
-const ldap = require('./modules/ldap')
 const user = require('./app/controllers/user')
 const regular_map = require('./app/maps/map')
 const register_map = require('./app/maps/map_register')
-
 const emoji = require('./modules/decoder')
 
 // Processing of messages
@@ -74,7 +71,7 @@ const router = (user, msg, map) => {
         }
 
         // console trace
-        // console.log(state[msg.from.id])
+        console.log(state[msg.from.id])
     }
 }
 

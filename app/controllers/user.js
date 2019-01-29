@@ -1,10 +1,6 @@
 const Model = require('../models/user')
 const { event } = require('../event')
 
-const init = (() => {
-    Model.User.remove({ active: false })
-})
-
 // const ad = require('../activedirectory')
 // Get user
 exports.get = async id => Model.User.findOne({ id: id })
@@ -56,62 +52,11 @@ exports.reset = async user => {
 
 exports.activate_user = async id => await Model.User.updateOne({ id: id }, { active: true })
 
-// Add quiz to user
-exports.addQuiz = async (user, quiz_id) => {
-    user.quizzes.push(quiz_id)
-    user.active_quiz = quiz_id
-    await user.save()
-    // await Model.User.save(user)
-}
-
 exports.setParam = async (id, user) => await Model.User.updateOne({ id: id }, user)
 
-exports.setName = async (id, name) => {
-    await Model.User.updateOne({ id: id }, { name: name })
-}
 exports.delete = async (user) => Model.User.deleteOne({ id: user.id })
 
-exports.setJob = async (id, job) => {
-    await Model.User.updateOne({ id: id }, { job: job })
-}
-
-exports.generateList = async (user, type) => {
-    let result = []
-    await Model.User.find({
-        id: { $ne: user.id },
-        visible: true, active: true
-    }, { '_id': 0, '__v': 0 },
-        (err, users) => {
-            if (err) {
-                logger(err, __filename, id)
-                return
-            }
-            result = users.filter((u) => {
-                return (type === 'new'
-                    ? !user.white_list.includes(u.id)
-                    : user.white_list.includes(u.id))
-                    && !user.ignore_list.includes(u.id)
-            })
-        }
-
-    )
-    return result
-}
-
-exports.getNew = async (user) => {
-    let result = []
-    await Model.User.find({
-        id: { $ne: user.id },
-        visible: true, active: true
-    }, { '_id': 0, '__v': 0 }, (err, users) => {
-        result = users.filter((u) => {
-            return !user.white_list.includes(u.id)
-                && !user.ignore_list.includes(u.id)
-        })
-    })
-    return result;
-}
-
+exports.getActiveUsers = async () => await Model.User.find({ visible: true, active: true })
 
 exports.save = async user => await user.save()
 
