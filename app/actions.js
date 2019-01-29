@@ -74,12 +74,12 @@ exports.generateQuiz = async (type, user) => {
                     while (options.length < OPTIONS_QNTY) {
                         let option = getOption(false, usersList)
                         options.filter(p => p.text)
-                        if (!options.some(p => p.text === option.text)){
-                        // if (options.indexOf(option) === -1) {
+                        if (!options.some(p => p.text === option.text)) {
+                            // if (options.indexOf(option) === -1) {
                             options.push(option)
                         }
                     }
-t
+
                     shuffle(options)
                     question.options = options
                     question.user = user._id
