@@ -5,4 +5,4 @@ db_dump/
 *.txt
 *.log
 package-lock.json
-config.*
+./resources/config.js
