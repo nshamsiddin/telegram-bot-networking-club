@@ -9,7 +9,11 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:set', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('choose_action'), action, 4)
+        const caption = `👔 : *${user.name}*\n💼 : *${user.job}*\n`
+        send.photo(user.id, user.photo, caption)
+        setTimeout(() => {
+            send.keyboard(msg.from.id, locale('choose_action'), action, 4)
+        }, 100)
         next && next()
     })
 
