@@ -55,7 +55,7 @@ exports.profile_photos = async (chat_id, index = 0) => {
             })
             let user = await User.get(chat_id)
             user.photo = photo
-            User.save(user)
+            await User.save(user)
         })
 
     function generate_options(n) {
