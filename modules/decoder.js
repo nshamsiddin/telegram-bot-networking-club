@@ -52,5 +52,5 @@ exports.emojify = number => {
     if (number && !isNaN(number))
         return number.toString().split('').map(p => numbers[p]).join('')
     else
-        return null
+        return '0️⃣'
 }

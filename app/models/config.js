@@ -3,9 +3,9 @@ const db = require('../../modules/mongodb')
 
 // Config Model
 const ConfigSchema = new db.mongoose.Schema({
-    config_type: { type: String, enum: ['value', 'object'] },
-    key: { type: String, unique: true },
-    value: String,
+    type: String,
+    key: String,
+    size: String,
     object: Object,
     description: String
 })

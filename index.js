@@ -1,4 +1,5 @@
-locale = require('./modules/locale').translate
+locale = require('./modules/locale').get
+locale_pick = require('./modules/locale').pick
 getTranslations = require('./modules/locale').getTranslations
 logger = require('./modules/logger')
 

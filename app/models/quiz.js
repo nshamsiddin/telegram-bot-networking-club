@@ -5,8 +5,8 @@ const db = require('../../modules/mongodb')
 const QuizSchema = new db.mongoose.Schema({
     user: { type: Number },
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
-    completed: { type: Boolean, default: false },
-    cursor: { type: Number, default: 0 }
+    cursor: { type: Number, default: 0 },
+    completed: { type: Boolean, default: false }
 })
 
 exports.Quiz = db.connect.model('Quiz', QuizSchema)

@@ -127,7 +127,7 @@ module.exports = (event, state, map, send) => {
                 event.emit('settings:set:success', user, msg)
             }
             else {
-                send.message(msg.from.id, locale('set_gender_error'))
+                send.message(msg.from.id, locale('choose_from_list'))
             }
         })
 

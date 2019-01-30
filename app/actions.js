@@ -25,7 +25,6 @@ const required_params = [
 
 exports.generateQuiz = async (type, user) => {
     let quiz = await Quiz.add(user._id)
-    let result = null
     const correct_answers = []
     let usersList = null
     usersList = await User.generateList(user, type)
@@ -44,6 +43,7 @@ exports.generateQuiz = async (type, user) => {
                         correct: true
                     }
                     question.correct_answer = option
+                    question.user = user._id
                     correct_answers.push(option)
                     await Question.save(question)
                     quiz.questions.push(question._id)
@@ -73,7 +73,6 @@ exports.generateQuiz = async (type, user) => {
                     // Populate options
                     while (options.length < OPTIONS_QNTY) {
                         let option = getOption(false, usersList)
-                        options.filter(p => p.text)
                         if (!options.some(p => p.text === option.text)) {
                             // if (options.indexOf(option) === -1) {
                             options.push(option)
@@ -125,7 +124,7 @@ exports.setAnswer = async (user_id, question_id, answer) => {
     await Question.save(question)
 
     bot.message(user_id, text)
-    await sleep(3000)
+    await sleep(1500)
 }
 
 // Execution postponing

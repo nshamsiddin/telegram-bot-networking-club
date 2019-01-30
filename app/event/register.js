@@ -94,7 +94,7 @@ module.exports = async (event, state, map, send) => {
 
         event.on('register:gender:error', (id) => {
             const buttons = [locale('male'), locale('female')]
-            send.keyboard(id, locale('set_gender_error'), buttons, 2)
+            send.keyboard(id, locale('choose_from_list'), buttons, 2)
         })
 
         event.on('register:gender:success', (id, action, next) => {

@@ -8,4 +8,4 @@ exports.loadConfigs = async () => await Model.Config.find({}, (err, res) => {
     return res
 })
 
-exports.get = async key => await Model.Config.findOne({ key: key })
+exports.get = async (type, key) => await Model.Config.findOne({ type: type, key: key })
