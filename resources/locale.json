@@ -139,17 +139,29 @@
         "eng": "✅ Yes",
         "rus": "✅ Да"
     },
-    "correct": {
+    "correct_answer_feedback": {
         "eng": "That is correct ✔;Well done 💪",
         "rus": "Правильно ✔;Молодец ✅;Так держать 💪"
     },
-    "incorrect": {
+    "incorrect_answer_feedback": {
         "eng": "Incorrect ✘; No worries ✖",
         "rus": "Неверно 😅; Не волнуйся 😊, продолжай 👉"
     },
     "report_after_quiz": {
         "eng": "`$[1] question(s) completed\n\nCorrect   $[2]\n\nIncorrect $[3]`",
-        "rus": "`======================\nПройдено $[1]\n\n$[2] => ✅\n\n$[3] => ❌\n\n======================`"
+        "rus": "`----------------------\nПройдено $[1]\n\n$[2] -> ✅\n\n$[3] -> ❌\n\n----------------------`"
+    },
+    "completed": {
+        "eng": "Completed",
+        "rus": ""
+    },
+    "correct": {
+        "eng": "Correct",
+        "rus": "Правильно"
+    },
+    "incorrect": {
+        "eng": "Incorrect",
+        "rus": "Неправильно"
     },
     "no": {
         "eng": "❌ No",

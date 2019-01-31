@@ -23,7 +23,7 @@ module.exports = (event, state, map, send) => {
                 .filter((u) => !user.white_list.includes(u.id) && !user.ignore_list.includes(u.id) && u.id != user.id)
                 .splice(0, (await Config.get('quiz', type)).size)
             for (let u of users) {
-                const question = await Question.create(quiz._id, type, {
+                const question = await Question.create(quiz._id, user.id, type, {
                     id: u.id,
                     photo: u.photo,
                     caption: `${u.name}\n${u.job}`
@@ -47,19 +47,24 @@ module.exports = (event, state, map, send) => {
             const last_question_id = quiz.questions[quiz.cursor - 1]
             const question = await Question.get(last_question_id)
             const u_id = question.correct_answer.id
+            let know = 0
+            let remember = 0
             //add to appropriate list
             switch (msg.text) {
                 case locale('know'):
+                    know++
                     user.ignore_list.push(u_id)
                     break
                 case locale('remember'):
+                    remember++
                     user.white_list.push(u_id)
                     break
                 default:
                     send.message(user.id, locale('choose_from_list'))
                     return
             }
-            await User.save(user)
+            await recordStatsNew(user, 'new', know, remember)
+            // await User.save(user)
 
             //check if there is another question
             if (quiz.questions[quiz.cursor]) {
@@ -142,7 +147,9 @@ module.exports = (event, state, map, send) => {
         const question = await Question.get(last_question_id)
         question.correct = (msg.text === question.correct_answer.text)
         await Question.save(question)
-        send.messageHiddenKeyboard(user.id, question.correct ? locale_pick('correct') : locale_pick('incorrect'))
+        send.messageHiddenKeyboard(user.id, question.correct
+            ? locale_pick('correct_answer_feedback')
+            : locale_pick('incorrect_answer_feedback'))
         setTimeout(async () => {
             //check if there is another question
             if (quiz.questions[quiz.cursor]) {
@@ -155,6 +162,7 @@ module.exports = (event, state, map, send) => {
                 for (let question_id of quiz.questions) {
                     (await Question.get(question_id)).correct ? correct++ : incorrect++
                 }
+                recordStats(user, type, correct, incorrect)
                 result = locale('report_after_quiz',
                     emoji.emojify(correct + incorrect),
                     emoji.emojify(correct),
@@ -183,7 +191,7 @@ module.exports = (event, state, map, send) => {
                 .map(p => (p[type]))
             options.push(correct_answer.text)
             shuffle(options)
-            const question = await Question.createWithOptions(quiz._id, type, correct_answer, options)
+            const question = await Question.createWithOptions(quiz._id, user.id, type, correct_answer, options)
             quiz.questions.push(question._id)
         }
         await Quiz.save(quiz)
@@ -200,5 +208,40 @@ module.exports = (event, state, map, send) => {
         //TODO: need to check if photo still exists
         send.photoAndKeyboard(user.id, record.photo, record.caption, buttons)
         await Quiz.save(quiz)
+    }
+
+    async function recordStats(user, type, correct, incorrect) {
+        const index = user.stats.findIndex(p => p.type === type)
+        if (index !== -1) {
+            user.stats[index].count += (correct + incorrect)
+            user.stats[index].correct += correct
+            user.stats[index].incorrect += incorrect
+        }
+        else {
+            user.stats.push({
+                type: type,
+                count: correct + incorrect,
+                correct: correct,
+                incorrect: incorrect
+            })
+        }
+        await User.save(user)
+    }
+
+    async function recordStatsNew(user, type, know, remember) {
+        const index = user.stats.findIndex(p => p.type === type)
+        if (index !== -1) {
+            user.stats[index].count += (know + remember)
+            user.stats[index].know += know
+            user.stats[index].remember += remember
+        }
+        else {
+            user.stats.push({
+                type: type,
+                count: know + remember,
+                know: know, remember: remember
+            })
+        }
+        await User.save(user)
     }
 }

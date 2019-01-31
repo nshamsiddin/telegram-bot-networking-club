@@ -6,3 +6,5 @@ db_dump/
 *.log
 package-lock.json
 ./resources/config.js
+.gitignore
+./modules/ldap.js
