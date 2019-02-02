@@ -56,7 +56,7 @@ exports.profile_photos = async (chat_id, index, event, msg, action, next) => {
                 let user = await User.get(chat_id)
                 user.photo = photo
                 await User.save(user)
-                event.emit('register:photo:choose:success')
+                event.emit('register:photo:choose:success', next)
             }
             else {
                 event.emit('register:photo:choose:error', msg)
