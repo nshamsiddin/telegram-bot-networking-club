@@ -85,20 +85,11 @@ module.exports = (event, state, map, send) => {
                 id: u.id,
                 name: u.name,
                 type: u.stats[1] ? u.stats[1].type : '',
-                count: u.stats[1] ? u.stats[1].count : '',
-                correct: u.stats[1] ? u.stats[1].correct : '',
-                incorrect: u.stats[1] ? u.stats[1].incorrect : ''
+                count: u.stats[1] ? u.stats[1].count : 0,
+                correct: u.stats[1] ? u.stats[1].correct : 0,
+                incorrect: u.stats[1] ? u.stats[1].incorrect : 0
             }))
     }
 
 }
 
-
-let v = [1]
-let maped = v
-    .filter(p => p == 2)
-    .slice(0, 1)
-    .map(p => ({
-        id: p.type
-    }))
-console.log(maped)
