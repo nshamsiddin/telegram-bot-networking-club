@@ -63,6 +63,18 @@
         "eng": "🔝 Top users",
         "rus": "🔝 Топ пользователей"
     },
+    "choose_criteria": {
+        "eng": "Choose criteria 👇",
+        "rus": "Выберите критерий 👇"
+    },
+    "by_company": {
+        "eng": "🏢 Whole company",
+        "rus": "🏢 По компании"
+    },
+    "by_department": {
+        "eng": "🕺 By department",
+        "rus": "🕺 По вашей дирекции"
+    },
     "quizzes_completed": {
         "eng": "Completed",
         "rus": "Пройдено"

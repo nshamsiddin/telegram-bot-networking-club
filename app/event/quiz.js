@@ -13,6 +13,7 @@ module.exports = (event, state, map, send) => {
         send.keyboard(msg.from.id, locale('choose_quiz_type'), action, 3)
         next && next()
     })
+
     //New quiz handlers
     {
         event.on('quiz:new', async (user, msg, action, next) => {
@@ -151,6 +152,7 @@ module.exports = (event, state, map, send) => {
 
     }
 
+    //Methods
     async function processAnswer(user, msg, type) {
         const quiz = await Quiz.get(user.active_quiz)
         const last_question_id = quiz.questions[quiz.cursor - 1]
