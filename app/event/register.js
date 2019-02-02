@@ -123,8 +123,9 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('register:photo:choose', (user, msg, action, next) => {
-            send.profile_photos(user.id)
-            next && next()
+            if (send.profile_photos(user.id)) {
+                next && next()
+            }
         })
 
         event.on('register:photo:choose:await', (user, msg, action, next) => {

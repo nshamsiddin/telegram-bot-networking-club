@@ -31,33 +31,39 @@ exports.error = async (id, err) =>
 
 exports.action = (id, action) => bot.sendChatAction(id, action)
 
-    // Send question
-    exports.question = (chat_id, options, file_id) => {
-        let opt = []
-        options.map(p => opt.push([{ text: emoji.encode(p.text) }]))
-        bot.sendPhoto(chat_id, file_id, {
-            reply_markup: {
-                keyboard: opt,
-                resize_keyboard: true,
-                one_time_keyboard: true
-            },
-        })
-    }
+// Send question
+exports.question = (chat_id, options, file_id) => {
+    let opt = []
+    options.map(p => opt.push([{ text: emoji.encode(p.text) }]))
+    bot.sendPhoto(chat_id, file_id, {
+        reply_markup: {
+            keyboard: opt,
+            resize_keyboard: true,
+            one_time_keyboard: true
+        },
+    })
+}
 
 exports.profile_photos = async (chat_id, index = 0) => {
-    bot.getUserProfilePhotos(chat_id, { offset: 0 })
+    await bot.getUserProfilePhotos(chat_id, { offset: 0 })
         .then(async p => {
             let size = p.photos.length
-            let photo = p.photos[index][0].file_id
-            bot.sendPhoto(chat_id, photo, {
-                reply_markup: {
-                    keyboard: generate_options(size),
-                    resize_keyboard: true
-                }
-            })
-            let user = await User.get(chat_id)
-            user.photo = photo
-            await User.save(user)
+            if (size > 0) {
+                let photo = p.photos[index][0].file_id
+                bot.sendPhoto(chat_id, photo, {
+                    reply_markup: {
+                        keyboard: generate_options(size),
+                        resize_keyboard: true
+                    }
+                })
+                let user = await User.get(chat_id)
+                user.photo = photo
+                await User.save(user)
+                return true
+            }
+            else {
+                return false
+            }
         })
 
     function generate_options(n) {
