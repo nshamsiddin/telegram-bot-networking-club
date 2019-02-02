@@ -127,11 +127,13 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('register:photo:choose:success', (next) => {
+            console.log('test')
             next && next()
         })
-
-        event.on('register:photo:choose:error', (msg) => {
-            send.error(msg.from.id, locale('choose_photo_error'))
+        
+        event.on('register:photo:choose:error', (chat_id) => {
+            console.log('test1')
+            send.error(chat_id, locale('choose_photo_error'))
         })
 
         event.on('register:photo:choose:await', (user, msg, action, next) => {

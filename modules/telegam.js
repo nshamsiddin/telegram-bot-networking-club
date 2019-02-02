@@ -59,7 +59,7 @@ exports.profile_photos = async (chat_id, index, event, msg, action, next) => {
                 event.emit('register:photo:choose:success', next)
             }
             else {
-                event.emit('register:photo:choose:error', msg)
+                event.emit('register:photo:choose:error', chat_id)
             }
         })
 
