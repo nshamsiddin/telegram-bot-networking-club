@@ -154,6 +154,7 @@ module.exports = (event, state, map, send) => {
 
     //Methods
     async function processAnswer(user, msg, type) {
+        send.action(user.id, 'typing')
         const quiz = await Quiz.get(user.active_quiz)
         const last_question_id = quiz.questions[quiz.cursor - 1]
         const question = await Question.get(last_question_id)

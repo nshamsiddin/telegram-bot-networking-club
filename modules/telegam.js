@@ -16,7 +16,7 @@ bot = new TelegramBot(config.bot.token, {
 exports.bot = bot
 
 // Send message
-exports.message = (chat_id, message, options = {parse_mode : 'Markdown'}) =>
+exports.message = (chat_id, message, options = { parse_mode: 'Markdown' }) =>
     bot.sendMessage(chat_id, message, options)
 
 // Send photo
@@ -29,18 +29,20 @@ exports.photo = (chat_id, file_id, caption) =>
 exports.error = async (id, err) =>
     bot.sendMessage(id, err, { parse_mode: 'markdown' })
 
-// Send question
-exports.question = (chat_id, options, file_id) => {
-    let opt = []
-    options.map(p => opt.push([{ text: emoji.encode(p.text) }]))
-    bot.sendPhoto(chat_id, file_id, {
-        reply_markup: {
-            keyboard: opt,
-            resize_keyboard: true,
-            one_time_keyboard: true
-        },
-    })
-}
+exports.action = (id, action) => bot.sendChatAction(id, action)
+
+    // Send question
+    exports.question = (chat_id, options, file_id) => {
+        let opt = []
+        options.map(p => opt.push([{ text: emoji.encode(p.text) }]))
+        bot.sendPhoto(chat_id, file_id, {
+            reply_markup: {
+                keyboard: opt,
+                resize_keyboard: true,
+                one_time_keyboard: true
+            },
+        })
+    }
 
 exports.profile_photos = async (chat_id, index = 0) => {
     bot.getUserProfilePhotos(chat_id, { offset: 0 })

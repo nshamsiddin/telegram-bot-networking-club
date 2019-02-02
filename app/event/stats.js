@@ -18,14 +18,14 @@ module.exports = (event, state, map, send) => {
                 if (stat.type === 'quiz_new') {
                     text += `*${locale(stat.type)}*\n`
                     text += `${locale('quizzes_completed')} : ${emoji.emojify(stat.count)}\n`
-                    text += `${locale('know')} : ${emoji.emojify(stat.know)} *${((stat.know * 100 / stat.count).toFixed(2))}%*\n`
+                    text += `${locale('know')} : ${emoji.emojify(stat.know)}\n`
                     text += `${locale('remember')} : ${emoji.emojify(stat.remember)}\n\`===================\`\n`
                 }
                 else {
                     text += `*${locale(stat.type)}*\n`
                     text += `${locale('quizzes_completed')} : ${emoji.emojify(stat.count)}\n`
-                    text += `${locale('correct')} : ${emoji.emojify(stat.correct)} *${(stat.correct * 100 / stat.count).toFixed(2)}%*\n`
-                    text += `${locale('incorrect')} : ${emoji.emojify(stat.incorrect)} *${(stat.incorrect * 100 / stat.count).toFixed(2)}%*\n\`-------------------\`\n`
+                    text += `${locale('correct')} : ${emoji.emojify(stat.correct)}\n`
+                    text += `${locale('incorrect')} : ${emoji.emojify(stat.incorrect)}\n\`-------------------\`\n`
                 }
                 exists = true
             })
@@ -39,11 +39,13 @@ module.exports = (event, state, map, send) => {
 
     event.on('stats:top:company', async (user, msg, action, next) => {
         let users = await getTopUsers('company', user)
+        let current = false
         let text = ''
         for (let i in users) {
-            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*\n`
-            text += `${locale('quizzes_completed')} : *${users[i].count}*\n`
-            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*\n\n`
+            users[i].id === user.id ? current = true : current = false
+            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? '⬅' : ''}\n`
+            text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? '⬅' : ''}\n`
+            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? '⬅' : ''}\n\n`
         }
         send.message(user.id, text)
     })
@@ -51,20 +53,36 @@ module.exports = (event, state, map, send) => {
     event.on('stats:top:department', async (user, msg, action, next) => {
         let users = await getTopUsers('department', user)
         let text = ''
+        let current = false
         for (let i in users) {
-            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*\n`
-            text += `${locale('quizzes_completed')} : *${users[i].count}*\n`
-            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*\n\n`
+            users[i].id === user.id ? current = true : current = false
+            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? '⬅' : ''}\n`
+            text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? '⬅' : ''}\n`
+            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? '⬅' : ''}\n\n`
         }
         send.message(user.id, text)
     })
 
     async function getTopUsers(criteria, user) {
+        let length
+        switch (criteria) {
+            case 'department':
+                length = 3
+                break
+            case 'company':
+                length = 10
+                break
+        }
         return (await User.getActiveUsers())
             .filter(u => criteria === 'department' ? u.department === user.department : true)
-            .sort((a, b) => { return b.stats[1].count - a.stats[1].count })
-            .slice(0, 3)
+            .sort((a, b) => {
+                const index_a = a.stats.findIndex(stat => stat.type === 'total')
+                const index_b = b.stats.findIndex(stat => stat.type === 'total')
+                return b.stats[index_a].count - a.stats[index_b].count
+            })
+            .slice(0, length)
             .map(u => ({
+                id: u.id,
                 name: u.name,
                 type: u.stats[1].type,
                 count: u.stats[1].count,
