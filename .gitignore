@@ -1,10 +1,9 @@
 .idea/
-node_modules/
 .vscode/
-db_dump/
+node_modules/
+resources/config.js
+modules/ldap.js
 *.txt
 *.log
 package-lock.json
-./resources/config.js
-.gitignore
-./modules/ldap.js
+# .gitignore

@@ -57,20 +57,15 @@ exports.remove = async id => Model.User.remove({ id: id })
 
 exports.cleaner = async () => Model.User.remove({})
 
-
-
-
 // init()
 // async function init() {
 //     for (let user of await Model.User.find({})) {
 //         let quiz_new_count = Math.floor(Math.random() * 100)
 //         let quiz_new_know = quiz_new_count - Math.floor(Math.random() * quiz_new_count)
 //         let quiz_new_remember = quiz_new_count - quiz_new_know
-
 //         let quiz_name_count = Math.floor(Math.random() * 100)
 //         let quiz_name_know = quiz_name_count - Math.floor(Math.random() * quiz_name_count)
 //         let quiz_name_remember = quiz_name_count - quiz_name_know
-
 //         let quiz_job_count = Math.floor(Math.random() * 100)
 //         let quiz_job_know = quiz_job_count - Math.floor(Math.random() * quiz_job_count)
 //         let quiz_job_remember = quiz_job_count - quiz_job_know
@@ -85,9 +80,7 @@ exports.cleaner = async () => Model.User.remove({})
 //         console.log(user)
 //     }
 // }
-
 // const departments = ['IT', 'Commercial', 'Marketing', 'Security']
-
 // const shuffle = require('shuffle-array')
 // init()
 // async function init() {
