@@ -44,25 +44,22 @@ exports.question = (chat_id, options, file_id) => {
     })
 }
 
-exports.profile_photos = async (chat_id, index = 0) => {
+exports.profile_photos = async (chat_id, index, event, msg, action, next) => {
     await bot.getUserProfilePhotos(chat_id, { offset: 0 })
         .then(async p => {
             let size = p.photos.length
             if (size > 0) {
                 let photo = p.photos[index][0].file_id
                 bot.sendPhoto(chat_id, photo, {
-                    reply_markup: {
-                        keyboard: generate_options(size),
-                        resize_keyboard: true
-                    }
+                    reply_markup: { keyboard: generate_options(size), resize_keyboard: true }
                 })
                 let user = await User.get(chat_id)
                 user.photo = photo
                 await User.save(user)
-                return true
+                event.emit('register:photo:choose:success')
             }
             else {
-                return false
+                event.emit('register:photo:choose:error', msg)
             }
         })
 

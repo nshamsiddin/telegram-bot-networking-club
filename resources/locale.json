@@ -259,6 +259,10 @@
         "eng": "🖼️ From profile",
         "rus": "🖼️ Из фото профиля"
     },
+    "choose_photo_error": {
+        "eng": "No photos in your account",
+        "rus": "На вашем аккаунте нет фотографий"
+    },
     "choose": {
         "eng": "Choose",
         "rus": "Выбрать"
