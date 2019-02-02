@@ -49,9 +49,6 @@ exports.reset = async user => {
     })
 }
 
-
-exports.activate_user = async id => await Model.User.updateOne({ id: id }, { active: true })
-
 exports.setParam = async (id, user) => await Model.User.updateOne({ id: id }, user)
 
 exports.delete = async (user) => Model.User.deleteOne({ id: user.id })
@@ -59,6 +56,10 @@ exports.delete = async (user) => Model.User.deleteOne({ id: user.id })
 exports.getActiveUsers = async () => await Model.User.find({ visible: true, active: true })
 
 exports.save = async user => await user.save()
+
+exports.updateStats = async (user, index, stat) => {
+    await Model.User.findByIdAndUpdate(user._id, { [`stats.${index}`]: stat })
+}
 
 // Remove user
 exports.remove = async id => Model.User.remove({ id: id })

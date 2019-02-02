@@ -39,7 +39,7 @@ module.exports = (event, state, map, send) => {
                 next && next()
             }
             else
-                send.error(user.id, locale('no_quiz'))
+                send.error(user.id, locale('no_new_quiz'))
         })
 
         event.on('quiz:new:await', async (user, msg, action, next) => {
@@ -47,33 +47,43 @@ module.exports = (event, state, map, send) => {
             const last_question_id = quiz.questions[quiz.cursor - 1]
             const question = await Question.get(last_question_id)
             const u_id = question.correct_answer.id
-            let know = 0
-            let remember = 0
             //add to appropriate list
             switch (msg.text) {
                 case locale('know'):
-                    know++
+                    question.know = true
                     user.ignore_list.push(u_id)
                     break
                 case locale('remember'):
-                    remember++
+                    question.know = false
                     user.white_list.push(u_id)
                     break
                 default:
                     send.message(user.id, locale('choose_from_list'))
                     return
             }
-            await recordStatsNew(user, 'new', know, remember)
-            // await User.save(user)
+            await Question.save(question)
+            // console.log('know : ' + know)
+            // console.log('remember : ' + remember)
+            // await recordStatsNew(user, 'quiz_new', know, remember)
+            await User.save(user)
 
             //check if there is another question
             if (quiz.questions[quiz.cursor]) {
                 event.emit('quiz:send:new', user, msg, action, quiz)
             }
             else {
+                let know = 0
+                let remember = 0
+                for (let question_id of quiz.questions) {
+                    (await Question.get(question_id)).know ? know++ : remember++
+                }
+
+                await recordStatsNew(user, 'quiz_new', know, remember)
+
                 quiz.completed = true
                 await Quiz.save(quiz)
-                send.messageHiddenKeyboard(user.id, locale_pick('quiz_completed'))
+                const text = `${locale_pick('quiz_completed')}\n*${locale('completed_new', emoji.emojify(quiz.cursor))}*`
+                send.messageHiddenKeyboard(user.id, text)
                 setTimeout(() => {
                     event.emit('location:back', user, msg)
                 }, 100)
@@ -98,7 +108,7 @@ module.exports = (event, state, map, send) => {
     {
         event.on('quiz:name', async (user, msg, action, next) => {
             let quiz = await generateQuiz(user, 'name')
-            if (quiz.questions) {
+            if (quiz.questions.length) {
                 event.emit('quiz:send:name', user, msg, action, quiz)
                 next && next()
             }
@@ -121,7 +131,7 @@ module.exports = (event, state, map, send) => {
     {
         event.on('quiz:job', async (user, msg, action, next) => {
             let quiz = await generateQuiz(user, 'job')
-            if (quiz.questions) {
+            if (quiz.questions.length) {
                 event.emit('quiz:send:job', user, msg, action, quiz)
                 next && next()
             }
@@ -162,14 +172,16 @@ module.exports = (event, state, map, send) => {
                 for (let question_id of quiz.questions) {
                     (await Question.get(question_id)).correct ? correct++ : incorrect++
                 }
-                recordStats(user, type, correct, incorrect)
-                result = locale('report_after_quiz',
-                    emoji.emojify(correct + incorrect),
-                    emoji.emojify(correct),
-                    emoji.emojify(incorrect))
-                send.messageHiddenKeyboard(user.id, result)
+                await recordStats(user, 'total', correct, incorrect)
+                await recordStats(user, 'quiz_' + type, correct, incorrect)
+                const text = `${locale_pick('quiz_completed')}\n*${locale('completed', emoji.emojify(quiz.cursor))}*`
+                // result = locale('report_after_quiz',
+                //     emoji.emojify(correct + incorrect),
+                //     emoji.emojify(correct),
+                //     emoji.emojify(incorrect))
+                send.messageHiddenKeyboard(user.id, text)
                 setTimeout(() => {
-                    event.emit('location:home', user, msg)
+                    event.emit('location:back', user, msg)
                 }, 1000)
             }
         }, 1000)
@@ -212,36 +224,50 @@ module.exports = (event, state, map, send) => {
 
     async function recordStats(user, type, correct, incorrect) {
         const index = user.stats.findIndex(p => p.type === type)
+        let stat = {}
         if (index !== -1) {
-            user.stats[index].count += (correct + incorrect)
-            user.stats[index].correct += correct
-            user.stats[index].incorrect += incorrect
+            stat = {
+                type: type,
+                count: user.stats[index].count + correct + incorrect,
+                correct: user.stats[index].correct + correct,
+                incorrect: user.stats[index].incorrect + incorrect
+            }
+            await User.updateStats(user, index, stat)
         }
         else {
-            user.stats.push({
+            stat = {
                 type: type,
                 count: correct + incorrect,
                 correct: correct,
                 incorrect: incorrect
-            })
+            }
+            user.stats.push(stat)
+            await User.save(user)
         }
-        await User.save(user)
+
     }
 
     async function recordStatsNew(user, type, know, remember) {
         const index = user.stats.findIndex(p => p.type === type)
+        let stat = {}
         if (index !== -1) {
-            user.stats[index].count += (know + remember)
-            user.stats[index].know += know
-            user.stats[index].remember += remember
+            stat = {
+                type: type,
+                count: user.stats[index].count + know + remember,
+                know: user.stats[index].know + know,
+                remember: user.stats[index].remember + remember
+            }
+            await User.updateStats(user, index, stat)
         }
         else {
-            user.stats.push({
+            stat = {
                 type: type,
                 count: know + remember,
-                know: know, remember: remember
-            })
+                know: know,
+                remember: remember
+            }
+            user.stats.push(stat)
+            await User.save(user)
         }
-        await User.save(user)
     }
 }

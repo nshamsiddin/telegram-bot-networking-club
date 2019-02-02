@@ -16,7 +16,7 @@ bot = new TelegramBot(config.bot.token, {
 exports.bot = bot
 
 // Send message
-exports.message = (chat_id, message, options = {}) =>
+exports.message = (chat_id, message, options = {parse_mode : 'Markdown'}) =>
     bot.sendMessage(chat_id, message, options)
 
 // Send photo

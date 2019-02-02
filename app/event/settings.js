@@ -159,7 +159,9 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:reset:yes', async (user, msg, action, next) => {
-        await User.reset(user)
+        user.stats = user.ignore_list = user.white_list = []
+        user.active_quiz = null
+        await User.save(user)
         send.message(msg.from.id, locale('reseted'))
         event.emit('location:back', user, msg)
     })

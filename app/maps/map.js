@@ -16,8 +16,6 @@ module.exports = {
                     event: 'quiz:new',
                     children: {
                         '*': { event: 'quiz:new:await', await: true },
-                        // [locale('know')]: { event: 'quiz:new:await', await: true },
-                        // [locale('remember')]: { event: 'quiz:new:await', await: true }
                     }
                 },
                 [locale('quiz_name')]: {

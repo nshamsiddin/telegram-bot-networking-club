@@ -9,6 +9,7 @@ const QuestionSchema = new db.mongoose.Schema({
     options: { type: Array },
     correct_answer: { type: Object },
     correct: { type: Boolean },
+    know: { type: Boolean },
 })
 
 exports.Question = db.connect.model('Question', QuestionSchema)
