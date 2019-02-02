@@ -22,7 +22,7 @@ module.exports = (event, state, map, send) => {
             let count = 0
             let users = (await User.getActiveUsers())
                 .filter((u) => !user.white_list.includes(u.id) && !user.ignore_list.includes(u.id) && u.id != user.id)
-                .splice(0, (await Config.get('quiz', type)).size)
+                .splice(0, (await Config.get('quiz', type)).size || 3)
             for (let u of users) {
                 const question = await Question.create(quiz._id, user.id, type, {
                     id: u.id,
@@ -192,7 +192,7 @@ module.exports = (event, state, map, send) => {
 
     async function generateQuiz(user, type) {
         // console.log(user)
-        const config = await Config.get('quiz', type)
+        const config = await Config.get('quiz', type) || {size : 3}
         const quiz = await Quiz.create(user.id)
         let users = shuffle(await User.getActiveUsers())
             .filter((u) => user.white_list.includes(u.id))
