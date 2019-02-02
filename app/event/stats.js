@@ -56,9 +56,9 @@ module.exports = (event, state, map, send) => {
         let current = false
         for (let i in users) {
             users[i].id === user.id ? current = true : current = false
-            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? '⬅' : ''}\n`
-            text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? '⬅' : ''}\n`
-            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? '⬅' : ''}\n\n`
+            text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? ' ⬅' : ''}\n`
+            text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? ' ⬅' : ''}\n`
+            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? ' ⬅' : ''}\n\n`
         }
         send.message(user.id, text)
     })

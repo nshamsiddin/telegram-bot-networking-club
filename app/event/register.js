@@ -123,9 +123,15 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('register:photo:choose', (user, msg, action, next) => {
-            if (send.profile_photos(user.id)) {
-                next && next()
-            }
+            send.profile_photos(user.id, 0, event, msg, action, next)
+        })
+
+        event.on('register:photo:choose:success', (msg, next) => {
+            next && next()
+        })
+
+        event.on('register:photo:choose:error', (msg) => {
+            send.error(msg.from.id, locale('choose_photo_error'))
         })
 
         event.on('register:photo:choose:await', (user, msg, action, next) => {
