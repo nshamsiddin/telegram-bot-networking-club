@@ -20,7 +20,7 @@ module.exports = (event, state, map, send) => {
             const type = 'new'
             const quiz = await Quiz.create(user.id)
             let count = 0
-            let users = (await User.getActiveUsers())
+            let users = shuffle(await User.getActiveUsers())
                 .filter((u) => !user.white_list.includes(u.id) && !user.ignore_list.includes(u.id) && u.id != user.id)
                 .splice(0, (await Config.get('quiz', type)).size || 3)
             for (let u of users) {
