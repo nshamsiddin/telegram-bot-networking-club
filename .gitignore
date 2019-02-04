@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+web/public/bower_components
 resources/config.js
 modules/ldap.js
 *.txt

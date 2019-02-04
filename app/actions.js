@@ -172,7 +172,7 @@ exports.setParam = async (user, msg, param) => {
 function cast_gender(text) {
     const genders = ['male', 'female']
     for (let gender of genders) {
-        const options = getTranslations(gender)
+        const options = get_translations(gender)
         for (let translation in options) {
             if (text === options[translation]) {
                 return gender

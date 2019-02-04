@@ -5,15 +5,24 @@ const User = require('../app/controllers/user')
 const send = require('./telegam')
 const { event, state } = require('../app/event')
 
+exports.ad = ad
 
-exports.createUser = (username, password, id) => {
-    ad.authenticate(`${username}@${config.domain.name}`, password, (err, auth) => {
+exports.createUser = async (username, password, id) => {
+    let user = {
+        id: id,
+        name: 'Shamsiddin Nabiev',
+        department: 'IT',
+        username: username
+    }
+    await User.create(user)
+    return
+    ad.authenticate(`${username}@${config.domain.name}`, password, async (err, auth) => {
         if (err) {
             logger(err, __filename, id)
             return
         }
         if (auth) {
-            ad.findUser(username, (err, info) => {
+            ad.findUser(username, async (err, info) => {
                 if (err) {
                     logger(err, __filename, id)
                     return
@@ -24,7 +33,7 @@ exports.createUser = (username, password, id) => {
                     department: getDepartment(info.dn),
                     username: username
                 }
-                User.create(user)
+                await User.create(user)
             })
         }
         else {
@@ -33,14 +42,14 @@ exports.createUser = (username, password, id) => {
     })
 }
 exports.findUser = async (username, id, event, action, next) => {
-    // let user = {
-    //     id: id,
-    //     name: username,
-    //     department: 'getDepartment(info.dn)',
-    //     username: username
-    // }
-    // event.emit('username:right', user, action, next)
-    // return
+    let user = {
+        id: id,
+        name: username,
+        department: 'getDepartment(info.dn)',
+        username: username
+    }
+    event.emit('username:right', user, action, next)
+    return
     await ad.findUser(username, (err, info) => {
         if (err) {
             logger(err, __filename, id)

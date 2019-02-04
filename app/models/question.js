@@ -9,6 +9,7 @@ const QuestionSchema = new db.mongoose.Schema({
     options: { type: Array },
     correct_answer: { type: Object },
     correct: { type: Boolean },
+    valid: { type: Boolean, default: true },
     know: { type: Boolean },
 })
 

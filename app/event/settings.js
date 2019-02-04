@@ -10,10 +10,13 @@ module.exports = (event, state, map, send) => {
 
     event.on('settings:set', async (user, msg, action, next) => {
         const caption = `\` 👔  : ${user.name}\n\n 💼  : ${user.job}\n\n♀️♂️ : ${locale(user.gender)}\``
-        send.photo(user.id, user.photo, caption)
-        setTimeout(() => {
-            send.keyboard(msg.from.id, locale('choose_action'), action, 4)
-        }, 100)
+        // send.photo(user.id, user.photo, caption)
+        // setTimeout(() => {
+        //     send.keyboard(msg.from.id, locale('choose_action'), action, 4)
+        // }, 100)
+
+        send.photoAndKeyboard(user.id, user.photo, caption, action, 4)
+
         next && next()
     })
 
@@ -88,7 +91,7 @@ module.exports = (event, state, map, send) => {
             next && next()
         })
 
-        event.on('settings:set:photo:await', async (user, msg, action, next) => {
+        event.on('settings:set:photo:upload:await', async (user, msg, action, next) => {
             if (msg.photo) {
                 msg.text = msg.photo[msg.photo.length - 1].file_id
                 actions.setParam(user, msg, 'photo')
@@ -100,15 +103,14 @@ module.exports = (event, state, map, send) => {
             }
         })
 
-        event.on('settings:set:photo:profile', async (user, msg, action, next) => {
-            await send.profile_photos(user.id)
-            next && next()
+        event.on('settings:set:photo:choose', (user, msg, action, next) => {
+            send.profile_photos(user.id, 0, next)
         })
 
-        event.on('settings:set:photo:profile:await', async (user, msg, action, next) => {
-            await send.profile_photos(user.id, msg.text)
-            // await setParam(user, msg, action, next, 'photo')
+        event.on('settings:set:photo:choose:await', (user, msg, action, next) => {
+            send.profile_photos(user.id, msg.text, next)
         })
+
 
     }
 
@@ -134,7 +136,7 @@ module.exports = (event, state, map, send) => {
         function cast_gender(text) {
             const genders = ['male', 'female']
             for (let gender of genders) {
-                const options = getTranslations(gender)
+                const options = get_translations(gender)
                 for (let translation in options) {
                     if (text === options[translation]) {
                         return gender

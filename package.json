@@ -20,6 +20,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.4",
+    "generate-password": "^1.4.1",
     "i18n-nodejs": "^3.0.0",
     "instagram-private-api": "^0.6.8",
     "localize": "^0.4.7",
@@ -27,6 +28,10 @@
     "node-cron": "^1.2.1",
     "node-telegram-bot-api": "^0.30.0",
     "nodemon": "^1.18.9",
+    "randomstring": "^1.1.5",
     "shuffle-array": "^1.0.1"
+  },
+  "devDependencies": {
+    "pug": "^2.0.3"
   }
 }

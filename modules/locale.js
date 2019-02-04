@@ -8,4 +8,4 @@ exports.get = (...text) => locale.translate(...text)
 
 exports.pick = (text) => shuffle(locale.translate(text).split(';'))
 
-exports.getTranslations = (text) => locale.getTranslations()[text]
+exports.get_translations = (text) => locale.getTranslations()[text]

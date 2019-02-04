@@ -1,0 +1,12 @@
+extends ./layout
+block content
+    .container.border.mt-5.login-container
+        form.form-signin#login-form(action='/authorize', method='POST')
+            .row.justify-content-md-center
+                    h2= authorize
+            .row.justify-content-md-center
+                    input#inputUsername.form-control.mt-4(name='username' type='text', placeholder=username, required='', autofocus='')
+            .row.justify-content-md-center
+                    input#inputPassword.form-control.mb-4.mt-4(name='password' type='password', placeholder='Password', required='', autofocus='')
+            .row.justify-content-md-center
+                    button.btn.btn-primary(type='submit')= get_password

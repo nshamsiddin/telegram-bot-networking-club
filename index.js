@@ -1,8 +1,9 @@
 locale = require('./modules/locale').get
 locale_pick = require('./modules/locale').pick
-getTranslations = require('./modules/locale').getTranslations
+get_translations = require('./modules/locale').get_translations
 logger = require('./modules/logger')
 
+const web_module = require('./web')
 const bot = require('./modules/telegam').bot
 const commandEvents = require('./app/commandEvents')
 const { event, state } = require('./app/event')
@@ -10,7 +11,6 @@ const user = require('./app/controllers/user')
 const regular_map = require('./app/maps/map')
 const register_map = require('./app/maps/map_register')
 const emoji = require('./modules/decoder')
-
 // Processing of messages
 bot.on('message', async msg => {
     if (msg.chat.type === 'private') {
@@ -24,7 +24,6 @@ bot.on('message', async msg => {
 })
 
 const router = (user, msg, map) => {
-
     // Decode emoji
     if (msg.text) msg.text = emoji.decode(msg.text)
     // No user status, we give the main menu

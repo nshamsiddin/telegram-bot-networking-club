@@ -10,31 +10,24 @@ exports.contains = async id => Model.User.findOne({ id: id })
 
 // Adding a new user
 exports.create = (user, action, next) => {
-    Model.User.findOne({ $or: [{ id: user.id }, { username: user.username }] }, async (err, doc) => {
+    Model.User.findOne({ id: user.id }, async (err, doc) => {
         if (err) {
             logger(err, __filename, id)
             return
         }
         else
             if (doc) {
-                if (doc.username == user.username) {
+                if (doc.username == user.username)
                     event.emit('username:exists', user)
-                    return
-                }
-                if (doc.id === user.id) {
+                if (doc.id === user.id)
                     event.emit('id:exists', user, action)
-                    return
-                }
             }
             else {
                 await new Model.User(user).save((err, new_user) => {
-                    if (err) {
+                    if (err)
                         logger(err, __filename, id)
-                        return
-                    }
-                    else {
+                    else
                         event.emit('user:created', user, action, next)
-                    }
                 })
             }
     })

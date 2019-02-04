@@ -306,5 +306,29 @@
     "no_photo_detected": {
         "eng": "No photo sent",
         "rus": "Неверный тип данных"
+    },
+    "authorize": {
+        "eng": "Authorization",
+        "rus": "Авторизация"
+    },
+    "web_username": {
+        "eng": "Username",
+        "rus": "Имя пользователя"
+    },
+    "password": {
+        "eng": "Password",
+        "rus": "Пароль"
+    },
+    "get_password": {
+        "eng": "Get password",
+        "rus": "Получить пароль"
+    },
+    "invalid_credentials": {
+        "eng": "Invalid credentials",
+        "rus": "Неверное имя пользователя или пароль"
+    },
+    "temporary_password": {
+        "eng": "Temporary password",
+        "rus": "Временной пароль"
     }
 }

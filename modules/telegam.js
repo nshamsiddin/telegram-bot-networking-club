@@ -8,15 +8,15 @@ let bot = null
 
 bot = new TelegramBot(config.bot.token, {
     polling: true,
-    // request: {
-    //     proxy: "http://127.0.0.1:15089"
-    // },
+    request: {
+        proxy: "http://127.0.0.1:15089"
+    },
 })
 
 exports.bot = bot
 
 // Send message
-exports.message = (chat_id, message, options = { parse_mode: 'Markdown' }) =>
+exports.message = (chat_id, message, options = { parse_mode: 'markdown' }) =>
     bot.sendMessage(chat_id, message, options)
 
 // Send photo
@@ -44,24 +44,29 @@ exports.question = (chat_id, options, file_id) => {
     })
 }
 
-exports.profile_photos = async (chat_id, index, event, msg, action, next) => {
-    await bot.getUserProfilePhotos(chat_id, { offset: 0 })
-        .then(async p => {
-            let size = p.photos.length
-            if (size > 0) {
-                let photo = p.photos[index][0].file_id
-                bot.sendPhoto(chat_id, photo, {
-                    reply_markup: { keyboard: generate_options(size), resize_keyboard: true }
-                })
-                let user = await User.get(chat_id)
-                user.photo = photo
-                await User.save(user)
-                event.emit('register:photo:choose:success', next)
-            }
-            else {
-                event.emit('register:photo:choose:error', chat_id)
-            }
-        })
+exports.profile_photos = async (chat_id, index, next) => {
+    if (!isNaN(index)) {
+        await bot.getUserProfilePhotos(chat_id, { offset: 0 })
+            .then(async p => {
+                let size = p.photos.length
+                if (size > 0) {
+                    let photo = p.photos[index][0].file_id
+                    bot.sendPhoto(chat_id, photo, {
+                        reply_markup: { keyboard: generate_options(size), resize_keyboard: true }
+                    })
+                    let user = await User.get(chat_id)
+                    user.photo = photo
+                    await User.save(user)
+                    next && next()
+                }
+                else {
+                    bot.error(chat_id, locale('choose_photo_error'))
+                }
+            })
+    }
+    else {
+        bot.error(chat_id, locale('choose_from_list'))
+    }
 
     function generate_options(n) {
         let options = [], opt = []
@@ -128,16 +133,13 @@ exports.photoAndKeyboard = (user, file_id, caption, data, inline = 1, options = 
         if (key === '*') continue
         // If the inline is greater than 1, then insert the inline elements in one line
         if (i < inline && opt[opt.length - 1] !== undefined) {
-            opt[opt.length - 1].push({
-                text: emoji.encode(key)
-            })
+            opt[opt.length - 1].push({ text: emoji.encode(key) })
         } else {
             if (i === inline) i = 0
             opt.push([{ text: emoji.encode(key) }])
         }
         i++
     }
-
     bot.sendPhoto(user, file_id, {
         caption: caption,
         parse_mode: 'Markdown',
@@ -147,7 +149,19 @@ exports.photoAndKeyboard = (user, file_id, caption, data, inline = 1, options = 
             // one_time_keyboard: true
         },
         ...options
+    }).catch(p => {
+        bot.sendPhoto(user, config.no_photo, {
+            caption: caption,
+            parse_mode: 'markdown',
+            reply_markup: {
+                keyboard: opt,
+                resize_keyboard: true,
+                // one_time_keyboard: true
+            },
+            ...options
+        })
     })
+
 
 
     // bot.sendMessage(user, message, {

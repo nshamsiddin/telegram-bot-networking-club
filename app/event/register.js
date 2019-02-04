@@ -80,7 +80,7 @@ module.exports = async (event, state, map, send) => {
 
         async function check_gender(user, text, list) {
             for (let gender of list) {
-                const options = getTranslations(gender)
+                const options = get_translations(gender)
                 for (let translation in options) {
                     if (text === options[translation]) {
                         user.gender = gender
@@ -123,21 +123,11 @@ module.exports = async (event, state, map, send) => {
         })
 
         event.on('register:photo:choose', (user, msg, action, next) => {
-            send.profile_photos(user.id, 0, event, msg, action, next)
-        })
-
-        event.on('register:photo:choose:success', (next) => {
-            console.log('test')
-            next && next()
-        })
-        
-        event.on('register:photo:choose:error', (chat_id) => {
-            console.log('test1')
-            send.error(chat_id, locale('choose_photo_error'))
+            send.profile_photos(user.id, 0, next)
         })
 
         event.on('register:photo:choose:await', (user, msg, action, next) => {
-            send.profile_photos(user.id, msg.text)
+            send.profile_photos(user.id, msg.text, next)
         })
 
     }

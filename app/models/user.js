@@ -7,7 +7,7 @@ const UserSchema = new db.mongoose.Schema({
     name: { type: String, maxlength: 128 },
     job: { type: String, maxlength: 128 },
     department: { type: String, maxlength: 128 },
-    username: { type: String, required: [true, 'usernameRequired'], unique: true, maxlength: 128 },
+    password: { type: String },
     gender: { type: String, enum: ['male', 'female'] },
     photo: { type: String },
     active: { type: Boolean, default: false },

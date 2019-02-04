@@ -60,14 +60,14 @@ module.exports = {
                                 [locale('upload_photo')]: {
                                     event: 'settings:set:photo:upload',
                                     children: {
-                                        '*': { event: 'settings:set:photo:await', await: true },
+                                        '*': { event: 'settings:set:photo:upload:await', await: true },
                                         [locale('back')]: { event: 'location:back' }
                                     }
                                 },
                                 [locale('choose_photo')]: {
-                                    event: 'settings:set:photo:profile',
+                                    event: 'settings:set:photo:choose',
                                     children: {
-                                        '*': { event: 'settings:set:photo:profile:await', await: true },
+                                        '*': { event: 'settings:set:photo:choose:await', await: true },
                                         [locale('choose')]: { event: 'location:back' }
                                     }
                                 },
