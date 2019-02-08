@@ -45,7 +45,7 @@ module.exports = async (event, state, map, send) => {
         if (new_user) {
             new_user.id = msg.from.id
             new_user.tmp_password_used = true
-            new_user.active = true
+            // new_user.active = true
             await User.save(new_user)
             send.keyboard(id, locale('set_photo'), action, 2)
             next && next()
