@@ -28,7 +28,7 @@ module.exports = async (event, state, map, send) => {
     })
 
     event.on('register:activate', (user, msg, action, next) => {
-        send.messageHiddenKeyboard(msg.from.id, locale('set_username'))
+        send.messageHiddenKeyboard(msg.from.id, locale('send_password'))
         next && next()
     })
 

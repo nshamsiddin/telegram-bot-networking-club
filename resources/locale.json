@@ -295,6 +295,10 @@
         "eng": "Activate",
         "rus": "Активация"
     },
+    "send_password": {
+        "eng": "Send password",
+        "rus": "Отправьте пароль или фотографию QR кода полученный в веб приложении"
+    },
     "activated": {
         "eng": "Your account is now active",
         "rus": "Ваш аккунт успешно активирован"
