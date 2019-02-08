@@ -47,7 +47,7 @@ module.exports = async (event, state, map, send) => {
             new_user.tmp_password_used = true
             // new_user.active = true
             await User.save(new_user)
-            send.keyboard(id, locale('set_photo'), action, 2)
+            send.keyboard(msg.from.id, locale('set_photo'), action, 2)
             next && next()
             // event.emit('registration:complete', new_user, msg)
         }
