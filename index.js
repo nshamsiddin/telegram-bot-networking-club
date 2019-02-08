@@ -3,7 +3,6 @@ locale_pick = require('./modules/locale').pick
 get_translations = require('./modules/locale').get_translations
 logger = require('./modules/logger')
 
-const web_module = require('./web')
 const bot = require('./modules/telegam').bot
 const commandEvents = require('./app/commandEvents')
 const { event, state } = require('./app/event')
