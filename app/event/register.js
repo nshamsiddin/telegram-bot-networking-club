@@ -3,6 +3,7 @@ const ldap = require('../../modules/ldap')
 const files = require('../../modules/files')
 const qrcode = require('../../modules/qrcode')
 const actions = require('../actions')
+const config = require('../../resources/config')
 module.exports = async (event, state, map, send) => {
 
     event.on('register:location:back', (user, msg) => {
@@ -58,7 +59,7 @@ module.exports = async (event, state, map, send) => {
     })
 
     event.on('register:password:error', msg => {
-        send.message(msg.from.id, locale('wrong_password'))
+        send.message(msg.from.id, locale('wrong_password', config.server_ip))
     })
 
     event.on('register:init', (user, msg, action, next) => {

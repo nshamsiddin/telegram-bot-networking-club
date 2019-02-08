@@ -7,6 +7,7 @@ module.exports = {
         token: '639456717:AAGXLdFjJO-PG3xys7f9jDAC5UeF9wJBK9s'
         // token: '764372115:AAFQhDVFGCEcUY4BlNAYB191BnmYRJhEBAc'
     },
+    server_ip: '172.30.13.25',
     default_folder: 'cache',
     domain: {
         name: 'UNITEL_MAIN'
