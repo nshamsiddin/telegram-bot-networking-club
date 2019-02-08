@@ -3,7 +3,7 @@ const db = require('../../modules/mongodb')
 
 // User Model
 const UserSchema = new db.mongoose.Schema({
-    id: { type: Number, required: [true, 'idRequired'], unique: true },
+    id: { type: Number, unique: true },
     name: { type: String, maxlength: 128 },
     job: { type: String, maxlength: 128 },
     department: { type: String, maxlength: 128 },

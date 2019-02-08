@@ -183,3 +183,15 @@ exports.messageHiddenKeyboard = (user, message) => {
         parse_mode: 'Markdown',
     })
 }
+
+
+exports.getFile = async (msg) => {
+    const file = await bot.getFile(msg.photo[msg.photo.length - 1].file_id)
+    const url = `${config.bot.file_api}${config.bot.token}/${file.file_path}`
+    return {
+        url: url,
+        size: file.size,
+        file_id: file.file_id,
+        path: file.file_path
+    }
+}

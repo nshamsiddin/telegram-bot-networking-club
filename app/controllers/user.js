@@ -5,6 +5,8 @@ const { event } = require('../event')
 // Get user
 exports.get = async id => Model.User.findOne({ id: id })
 
+exports.getByPassword = async pass => Model.User.findOne({ tmp_password: pass })
+
 // User Existence Check
 exports.contains = async id => Model.User.findOne({ id: id })
 

@@ -19,6 +19,14 @@
         "eng": "Incorrect username",
         "rus": "Неверное имя пользователя"
     },
+    "wrong_password": {
+        "eng": "Incorrect password",
+        "rus": "Неверный пароль, для получения пароля зайдите в веб приложение"
+    },
+    "qr_error": {
+        "eng": "Incorrect QR code",
+        "rus": "Не получилось прочесть QR код, сделайте снимок заново либо введите пароль вручную"
+    },
     "duplicate_username": {
         "eng": "Username exists",
         "rus": "Пользователь с таким логином уже есть"
@@ -282,6 +290,10 @@
     "not_active": {
         "eng": "Your account is not active, please fill in theese fields:\n",
         "rus": "Ваш аккунт не активен, пожалуйста проходя по 'Настройки>О себе' заполните следующие данные:\n"
+    },
+    "activate": {
+        "eng": "Activate",
+        "rus": "Активация"
     },
     "activated": {
         "eng": "Your account is now active",

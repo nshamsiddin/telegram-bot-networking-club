@@ -10,6 +10,7 @@ const user = require('./app/controllers/user')
 const regular_map = require('./app/maps/map')
 const register_map = require('./app/maps/map_register')
 const emoji = require('./modules/decoder')
+
 // Processing of messages
 bot.on('message', async msg => {
     if (msg.chat.type === 'private') {

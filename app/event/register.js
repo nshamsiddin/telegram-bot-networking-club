@@ -1,7 +1,8 @@
 const User = require('../controllers/user')
 const ldap = require('../../modules/ldap')
+const files = require('../../modules/files')
+const qrcode = require('../../modules/qrcode')
 const actions = require('../actions')
-
 module.exports = async (event, state, map, send) => {
 
     event.on('register:location:back', (user, msg) => {
@@ -23,6 +24,41 @@ module.exports = async (event, state, map, send) => {
             }
         }, map)
         event.emit(reducer.event, user, msg, reducer)
+    })
+
+    event.on('register:activate', (user, msg, action, next) => {
+        send.messageHiddenKeyboard(msg.from.id, locale('set_username'))
+        next && next()
+    })
+
+    event.on('register:password', async (user, msg, action, next) => {
+        let password = null
+        if (msg.photo) {
+            const file = await send.getFile(msg)
+            password = await qrcode.scan(file.url, msg, event)
+        }
+        else {
+            password = msg.text
+        }
+        let new_user = await User.getByPassword(password)
+        if (new_user) {
+            new_user.id = msg.from.id
+            new_user.tmp_password_used = true
+            new_user.active = true
+            await User.save(new_user)
+            event.emit('registration:complete', new_user, msg)
+        }
+        else {
+            event.emit('register:password:error', msg)
+        }
+    })
+
+    event.on('register:password:qr:error', msg => {
+        send.message(msg.from.id, locale('qr_error'))
+    })
+
+    event.on('register:password:error', msg => {
+        send.message(msg.from.id, locale('wrong_password'))
     })
 
     event.on('register:init', (user, msg, action, next) => {
