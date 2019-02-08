@@ -47,7 +47,8 @@ module.exports = async (event, state, map, send) => {
             new_user.tmp_password_used = true
             new_user.active = true
             await User.save(new_user)
-            event.emit('registration:complete', new_user, msg)
+            next && next()
+            // event.emit('registration:complete', new_user, msg)
         }
         else {
             event.emit('register:password:error', msg)

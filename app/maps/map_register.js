@@ -6,7 +6,21 @@ module.exports = {
             children: {
                 '*': {
                     event: 'register:password',
-                    await: true
+                    children: {
+                        [locale('upload_photo')]: {
+                            event: 'register:photo:upload',
+                            children: {
+                                '*': { event: 'register:photo:upload:await', await: true },
+                            }
+                        },
+                        [locale('choose_photo')]: {
+                            event: 'register:photo:choose',
+                            children: {
+                                '*': { event: 'register:photo:choose:await', await: true },
+                                [locale('choose')]: { event: 'registration:complete' }
+                            }
+                        }
+                    }
                 }
             }
         },
