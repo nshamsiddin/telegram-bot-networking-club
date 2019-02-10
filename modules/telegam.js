@@ -78,6 +78,24 @@ exports.profile_photos = async (chat_id, index, next) => {
     }
 }
 
+
+exports.get_profile_photos = async (chat_id, index) => {
+    return new Promise((resolve, reject) => {
+        if (!isNaN(index)) {
+            bot.getUserProfilePhotos(chat_id, { offset: 0 })
+                .then(p => {
+                    if (p.total_count)
+                        return resolve(p)
+                    else
+                        return reject('no_profile_photos')
+                })
+        }
+        else {
+            return reject('not_number')
+        }
+    })
+}
+
 // Sending Messages with the keyboard
 exports.keyboard = (user, message, data, inline = 2, options = {}) => {
     let opt = [], arr = [], i = 0

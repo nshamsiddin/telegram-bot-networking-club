@@ -4,6 +4,8 @@ const files = require('../../modules/files')
 const qrcode = require('../../modules/qrcode')
 const actions = require('../actions')
 const config = require('../../resources/config')
+const emoji = require('../../modules/decoder')
+
 module.exports = async (event, state, map, send) => {
 
     event.on('register:location:back', (user, msg) => {
@@ -33,6 +35,7 @@ module.exports = async (event, state, map, send) => {
     })
 
     event.on('register:password', async (user, msg, action, next) => {
+        send.action(msg.from.id, 'typing')
         let password = null
         if (msg.photo) {
             const file = await send.getFile(msg)
@@ -47,7 +50,7 @@ module.exports = async (event, state, map, send) => {
             new_user.tmp_password_used = true
             // new_user.active = true
             await User.save(new_user)
-            send.keyboard(msg.from.id, locale('set_photo'), action, 2)
+            send.keyboard(msg.from.id, locale('right_password'), action, 2)
             next && next()
             // event.emit('registration:complete', new_user, msg)
         }
@@ -161,13 +164,35 @@ module.exports = async (event, state, map, send) => {
                 send.message(msg.from.id, locale('upload_photo_error'))
         })
 
-        event.on('register:photo:choose', (user, msg, action, next) => {
-            send.profile_photos(user.id, 0, next)
+        event.on('register:photo:choose', async (user, msg, action, next) => {
+            await send_profile_photos(user, 1)
+            next & next()
+            // send.profile_photos(user.id, 0, next)
         })
 
-        event.on('register:photo:choose:await', (user, msg, action, next) => {
-            send.profile_photos(user.id, msg.text, next)
+        event.on('register:photo:choose:await', async (user, msg, action, next) => {
+            await send_profile_photos(user, emoji.demojify(msg.text))
+            // send.profile_photos(user.id, msg.text, next)
         })
+
+        async function send_profile_photos(user, index) {
+            send.get_profile_photos(user.id, index)
+                .then(async p => {
+                    const buttons = []
+                    for (let i = 0; i < p.total_count; i++) {
+                        buttons.push(emoji.emojify(i + 1))
+                    }
+                    buttons.push(locale('choose'))
+                    const photo = p.photos[index - 1][0].file_id
+                    user.photo = photo
+                    await User.save(user)
+                    send.photoAndKeyboard(user.id, photo, null, buttons, p.total_count)
+                })
+                .catch(e => {
+                    send.message(user.id, locale('choose_from_list'))
+                })
+        }
+
 
     }
 

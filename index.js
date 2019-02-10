@@ -56,6 +56,7 @@ const router = (user, msg, map) => {
             const action = findBranch.children[branch]
             // Call action
             event.emit(action.event, user, msg, action, (value = msg.text) => {
+                console.log(action.event)
                 event.emit('location:next', user, msg, action, value)
             })
         }

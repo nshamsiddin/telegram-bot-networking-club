@@ -54,3 +54,9 @@ exports.emojify = number => {
     else
         return '0️⃣'
 }
+exports.demojify = emoji => {
+    if (numbers.indexOf(emoji) !== -1)
+        return numbers.indexOf(emoji)
+    else
+        return null
+}

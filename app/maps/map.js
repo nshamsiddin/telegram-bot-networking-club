@@ -68,7 +68,8 @@ module.exports = {
                                     event: 'settings:set:photo:choose',
                                     children: {
                                         '*': { event: 'settings:set:photo:choose:await', await: true },
-                                        [locale('choose')]: { event: 'location:back' }
+                                        [locale('choose')]: { event: 'settings:set:photo:choose:ok' },
+                                        [locale('back')]: { event: 'location:back' }
                                     }
                                 },
                                 [locale('back')]: { event: 'location:back' }

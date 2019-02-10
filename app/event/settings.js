@@ -1,5 +1,7 @@
 const User = require('../controllers/user')
 const actions = require('../actions')
+const files = require('../../modules/files')
+const emoji = require('../../modules/decoder')
 
 module.exports = (event, state, map, send) => {
 
@@ -94,6 +96,7 @@ module.exports = (event, state, map, send) => {
         event.on('settings:set:photo:upload:await', async (user, msg, action, next) => {
             if (msg.photo) {
                 msg.text = msg.photo[msg.photo.length - 1].file_id
+
                 actions.setParam(user, msg, 'photo')
                 event.emit('location:back', user, msg)
             }
@@ -103,14 +106,41 @@ module.exports = (event, state, map, send) => {
             }
         })
 
-        event.on('settings:set:photo:choose', (user, msg, action, next) => {
-            send.profile_photos(user.id, 0, next)
+        event.on('settings:set:photo:choose', async (user, msg, action, next) => {
+            await send_profile_photos(user, 1)
+            next & next()
         })
 
-        event.on('settings:set:photo:choose:await', (user, msg, action, next) => {
-            send.profile_photos(user.id, msg.text, next)
+        event.on('settings:set:photo:choose:await', async (user, msg, action, next) => {
+            await send_profile_photos(user, emoji.demojify(msg.text))
         })
 
+        event.on('settings:set:photo:choose:ok', async (user, msg, action, next) => {
+            user.photo = user.tmp
+            await User.save(user)
+            send.message(user.id, locale('set_photo_success'))
+            setTimeout(() => {
+                event.emit('location:home', user, msg)
+            }, 100)
+        })
+
+        async function send_profile_photos(user, index) {
+            send.get_profile_photos(user.id, index)
+                .then(async p => {
+                    const buttons = []
+                    for (let i = 0; i < p.total_count; i++) {
+                        buttons.push(emoji.emojify(i + 1))
+                    }
+                    buttons.push(locale('choose'), locale('back'))
+                    const photo = p.photos[index - 1][0].file_id
+                    user.tmp = photo
+                    await User.save(user)
+                    send.photoAndKeyboard(user.id, photo, null, buttons, p.total_count + 1)
+                })
+                .catch(e => {
+                    send.message(user.id, locale('choose_from_list'))
+                })
+        }
 
     }
 
@@ -149,9 +179,9 @@ module.exports = (event, state, map, send) => {
     }
 
     event.on('settings:set:success', (user, msg) => {
-        send.message(msg.from.id, locale('change_success'))
+        send.messageHiddenKeyboard(msg.from.id, locale('change_success'))
         setTimeout(() => {
-            event.emit('location:back', user, msg)
+            event.emit('location:home', user, msg)
         }, 1000)
     })
 

@@ -19,6 +19,7 @@ const UserSchema = new db.mongoose.Schema({
     ignore_list: [{ type: Number }],
     active_quiz: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', default: null },
     last_question: { type: mongoose.Schema.Types.ObjectId, ref: 'Question', default: null },
+    tmp: String,
 })
 
 UserSchema.pre('save', (next) => {
