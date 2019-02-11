@@ -11,3 +11,4 @@ modules/ldap.js
 *.log
 package-lock.json
 # .gitignore
+resources/config.js
