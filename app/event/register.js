@@ -184,10 +184,10 @@ module.exports = async (event, state, map, send) => {
                     }
                     buttons.push(locale('choose'))
                     const photo = p.photos[index - 1][p.photos[index - 1].length - 1].file_id
-                    const path = await files.downloadImage(await send.getFileById(photo))
-                    user.photo = path
+                    // const path = await files.downloadImage(await send.getFileById(photo))
+                    user.photo = photo
                     await User.save(user)
-                    send.photoAndKeyboard(user.id, path, null, buttons, p.total_count)
+                    send.photoAndKeyboard(user.id, photo, null, buttons, p.total_count)
                 })
                 .catch(e => {
                     send.message(user.id, locale('choose_from_list'))
