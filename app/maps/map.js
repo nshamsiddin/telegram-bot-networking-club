@@ -82,6 +82,16 @@ module.exports = {
                                 [locale('back')]: { event: 'location:back' }
                             }
                         },
+                        
+                        [locale('gender')]: {
+                            event: 'settings:set:gender',
+                            children: {
+                                '*': { event: 'settings:set:gender:await', await: true },
+                                [locale('male')]: { event: 'settings:set:gender:await', },
+                                [locale('female')]: { event: 'settings:set:gender:await', },
+                                [locale('back')]: { event: 'location:back' }
+                            }
+                        },
                         [locale('department')]: {
                             event: 'settings:set:department',
                             children: {
@@ -97,15 +107,6 @@ module.exports = {
                             }
                         },
 
-                        [locale('gender')]: {
-                            event: 'settings:set:gender',
-                            children: {
-                                '*': { event: 'settings:set:gender:await', await: true },
-                                [locale('male')]: { event: 'settings:set:gender:await', },
-                                [locale('female')]: { event: 'settings:set:gender:await', },
-                                [locale('back')]: { event: 'location:back' }
-                            }
-                        },
                         [locale('back')]: { event: 'location:back' }
                     }
                 },
