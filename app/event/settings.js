@@ -1,4 +1,5 @@
 const User = require('../controllers/user')
+const Department = require('../controllers/department')
 const actions = require('../actions')
 const files = require('../../modules/files')
 const emoji = require('../../modules/decoder')
@@ -17,7 +18,7 @@ module.exports = (event, state, map, send) => {
         //     send.keyboard(msg.from.id, locale('choose_action'), action, 4)
         // }, 100)
 
-        send.photoAndKeyboard(user.id, user.photo, caption, action, 4)
+        send.photoAndKeyboard(user.id, user.photo, caption, action, 3)
 
         next && next()
     })
@@ -32,16 +33,20 @@ module.exports = (event, state, map, send) => {
         event.emit('location:back', user, msg)
     })
 
-    event.on('settings:set:department', async (user, msg, action, next) => {
-        send.keyboard(msg.from.id, locale('set_department'), action)
-        next && next()
-    })
+    {
+        event.on('settings:set:department', async (user, msg, action, next) => {
+            const buttons = (await Department.getAll())
+                .map(d => d.name)
+            buttons.push(locale('back'))
+            send.keyboard(msg.from.id, locale('set_department'), buttons, 1)
+            next && next()
+        })
 
-    event.on('settings:set:department:await', async (user, msg, action, next) => {
-        actions.setParam(user, msg, 'department')
-        event.emit('location:back', user, msg)
-    })
-
+        event.on('settings:set:department:await', async (user, msg, action, next) => {
+            actions.setParam(user, msg, 'department')
+            event.emit('location:back', user, msg)
+        })
+    }
 
     //name handler
     {
@@ -204,6 +209,7 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:delete:yes', async (user, msg, action, next) => {
+        await Department.userRemoved(user.department)
         await User.delete(user)
         state[user.id] = []
         send.messageHiddenKeyboard(msg.from.id, locale('deleted'))
