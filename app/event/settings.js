@@ -197,7 +197,13 @@ module.exports = (event, state, map, send) => {
     })
 
     event.on('settings:reset:yes', async (user, msg, action, next) => {
-        user.stats = user.ignore_list = user.white_list = []
+        user.stats = [
+            { "type": "quiz_new", "count": 0, "know": 0, "remember": 0 },
+            { "type": "total", "count": 0, "correct": 0, "incorrect": 0 },
+            { "type": "quiz_name", "count": 0, "correct": 0, "incorrect": 0 },
+            { "type": "quiz_job", "count": 0, "correct": 0, "incorrect": 0 }
+        ]
+        user.ignore_list = user.white_list = []
         user.active_quiz = null
         await User.save(user)
         send.message(msg.from.id, locale('reseted'))
