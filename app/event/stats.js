@@ -45,7 +45,7 @@ module.exports = (event, state, map, send) => {
             users[i].id === user.id ? current = true : current = false
             text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? '⬅' : ''}\n`
             text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? '⬅' : ''}\n`
-            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? '⬅' : ''}\n\n`
+            text += `${locale('correct')} : *${getPercent(users[i].correct, users[i].count)}*${current ? '⬅' : ''}\n\n`
         }
         send.message(user.id, text)
     })
@@ -58,10 +58,17 @@ module.exports = (event, state, map, send) => {
             users[i].id === user.id ? current = true : current = false
             text += `${emoji.emojify(i * 1 + 1)} *${users[i].name}*${current ? ' ⬅' : ''}\n`
             text += `${locale('quizzes_completed')} : *${users[i].count}*${current ? ' ⬅' : ''}\n`
-            text += `${locale('correct')} : *${((users[i].correct * 100 / users[i].count).toFixed(2))}*${current ? ' ⬅' : ''}\n\n`
+            text += `${locale('correct')} : *${getPercent(users[i].correct, users[i].count)}*${current ? ' ⬅' : ''}\n\n`
         }
         send.message(user.id, text)
     })
+
+    function getPercent(correct, count) {
+        if (count == 0)
+            return count
+        else
+            return (correct * 100 / count).toFixed(2)
+    }
 
     async function getTopUsers(criteria, user) {
         let length
