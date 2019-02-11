@@ -43,6 +43,7 @@ module.exports = (event, state, map, send) => {
         })
 
         event.on('settings:set:department:await', async (user, msg, action, next) => {
+            Department.changedDepartment(user.department, msg.text)
             actions.setParam(user, msg, 'department')
             event.emit('location:back', user, msg)
         })
