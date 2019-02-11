@@ -29,7 +29,7 @@ exports.photo = (chat_id, file_id, caption) =>
 exports.error = async (id, err) =>
     bot.sendMessage(id, err, { parse_mode: 'markdown' })
 
-exports.action = (id, action) => bot.sendChatAction(id, action)
+exports.setAction = (id, action) => bot.sendChatAction(id, action)
 
 // Send question
 exports.question = (chat_id, options, file_id) => {
@@ -201,10 +201,23 @@ exports.messageHiddenKeyboard = (user, message) => {
         parse_mode: 'Markdown',
     })
 }
+bot.sendPhoto(config.admin_id, 'C:/Users/shams/Projects/networking-telegram-bot/cache/photos/file_5.jpg');
+
+// bot.sendPhoto(config.admin_id, '../cache/photos/file_4.jpg')
 
 
 exports.getFile = async (msg) => {
     const file = await bot.getFile(msg.photo[msg.photo.length - 1].file_id)
+    const url = `${config.bot.file_api}${config.bot.token}/${file.file_path}`
+    return {
+        url: url,
+        size: file.size,
+        file_id: file.file_id,
+        path: file.file_path
+    }
+}
+exports.getFileById = async (file_id) => {
+    const file = await bot.getFile(file_id)
     const url = `${config.bot.file_api}${config.bot.token}/${file.file_path}`
     return {
         url: url,
