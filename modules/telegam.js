@@ -201,10 +201,6 @@ exports.messageHiddenKeyboard = (user, message) => {
         parse_mode: 'Markdown',
     })
 }
-bot.sendPhoto(config.admin_id, 'C:/Users/shams/Projects/networking-telegram-bot/cache/photos/file_5.jpg');
-
-// bot.sendPhoto(config.admin_id, '../cache/photos/file_4.jpg')
-
 
 exports.getFile = async (msg) => {
     const file = await bot.getFile(msg.photo[msg.photo.length - 1].file_id)
