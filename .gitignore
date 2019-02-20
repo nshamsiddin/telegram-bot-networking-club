@@ -7,4 +7,4 @@ web/public/bower_components
 *.txt
 *.log
 package-lock.json
-resources/config.js
+#resources/config.js
