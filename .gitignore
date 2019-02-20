@@ -1,15 +1,10 @@
-./resources/config.js
-resources/config.js
 .idea/
 .vscode/
 node_modules/
 cache/
 cache/photos
 web/public/bower_components
-modules/ldap.js
 *.txt
 *.log
 package-lock.json
-# .gitignore
-resources/config.js
 resources/config.js
