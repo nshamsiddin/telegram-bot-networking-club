@@ -160,7 +160,7 @@ exports.photoAndKeyboard = (user, file_id, caption, data, inline = 1, options = 
     }
     bot.sendPhoto(user, file_id, {
         caption: caption,
-        parse_mode: 'Markdown',
+        parse_mode: 'markdown',
         reply_markup: {
             keyboard: opt,
             resize_keyboard: true,
@@ -168,7 +168,7 @@ exports.photoAndKeyboard = (user, file_id, caption, data, inline = 1, options = 
         },
         ...options
     }).catch(p => {
-        bot.sendPhoto(user, config.no_photo, {
+        bot.sendPhoto(user, config.default_photo, {
             caption: caption,
             parse_mode: 'markdown',
             reply_markup: {

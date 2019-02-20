@@ -33,7 +33,6 @@ exports.create = (user, action, next) => {
                 })
             }
     })
-
 }
 
 exports.reset = async user => await Model.User.updateOne({ id: user.id }, { white_list: [], ignore_list: [] })

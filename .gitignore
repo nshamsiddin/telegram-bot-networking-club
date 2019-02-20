@@ -12,3 +12,4 @@ modules/ldap.js
 package-lock.json
 # .gitignore
 resources/config.js
+resources/config.js

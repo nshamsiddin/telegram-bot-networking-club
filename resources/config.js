@@ -7,6 +7,7 @@ module.exports = {
         token: '639456717:AAGv_BCTABXhoHD4Wilxws9iFSkH6-z6mvQ' // Test Networking bot
         // token: '699149533:AAE2em4IAmze3CZjI3BHNVaIpqA3oj5v9Oc' //Beeline networking bot
     },
+    default_photo : 'AgADBAADsrExG5_haFMd0Nbh2PutP7wDIhsABCGqwg-hyXrIzUYCAAEC',
     server_ip: '172.30.13.25',
     default_folder: 'cache',
     domain: {

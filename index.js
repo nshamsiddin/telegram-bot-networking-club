@@ -13,6 +13,7 @@ const emoji = require('./modules/decoder')
 
 // Processing of messages
 bot.on('message', async msg => {
+    console.log(msg)
     if (msg.chat.type === 'private') {
         let map
         let findUser = await user.contains(msg.from.id)
